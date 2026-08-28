@@ -1,0 +1,816 @@
+/* =====================================
+   CONFIGURAÇÃO
+===================================== */
+
+:root {
+
+    --black: #050505;
+    --white: #ffffff;
+
+    --grey: #eeeeee;
+    --text: #222222;
+
+    --accent: #ff5a36;
+
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+
+    margin: 0;
+
+    background: #ffffff;
+
+    color: var(--text);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+
+/* =====================================
+   HEADER
+===================================== */
+
+.site-header {
+
+    width: 100%;
+
+    background: #000000;
+
+    color: #ffffff;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 100;
+
+}
+
+
+.header-inner {
+
+    height: 60px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+
+    padding: 0 10px;
+
+}
+
+
+/* =====================================
+   LOGO
+===================================== */
+
+.logo {
+
+    flex-shrink: 0;
+
+    color: #ffffff;
+
+    font-size: 28px;
+
+    font-weight: 900;
+
+    letter-spacing: -1.5px;
+
+}
+
+
+.logo span,
+.footer-inner span {
+    color: #ffffff;
+}
+
+
+/* =====================================
+   MENU
+===================================== */
+
+.main-menu {
+
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    white-space: nowrap;
+
+}
+
+
+.main-menu a {
+
+    color: #ffffff;
+
+    font-size: 9px;
+
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition: opacity .2s;
+
+}
+
+
+.main-menu a:hover {
+
+    opacity: .65;
+
+}
+
+
+/* =====================================
+   PARTE DIREITA
+===================================== */
+
+.header-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+
+}
+
+
+.search-box {
+
+    width: 175px;
+
+    height: 36px;
+
+    background: #ffffff;
+
+    border-radius: 4px;
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+
+.search-box input {
+
+    width: 100%;
+
+    height: 100%;
+
+    border: 0;
+
+    outline: 0;
+
+    padding: 0 10px;
+
+    font-size: 12px;
+
+}
+
+
+.search-box span {
+
+    width: 28px;
+
+    color: #000000;
+
+    font-size: 20px;
+
+}
+
+
+.login {
+
+    color: #ffffff;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+}
+
+
+.language {
+
+    width: 29px;
+
+    height: 30px;
+
+    border: 1px solid #ffffff;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    border-radius: 4px;
+
+    font-size: 10px;
+
+    cursor: pointer;
+
+}
+
+
+.language.active {
+
+    background: #ffffff;
+
+    color: #000000;
+
+}
+
+
+/* =====================================
+   MENU MOBILE
+===================================== */
+
+.menu-button {
+
+    display: none;
+
+    background: none;
+
+    border: 0;
+
+    color: #ffffff;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+}
+
+
+/* =====================================
+   ESPAÇO SUPERIOR
+===================================== */
+
+.top-space {
+
+    height: 68px;
+
+}
+
+
+/* =====================================
+   CATEGORIAS
+===================================== */
+
+.category-bar {
+
+    width: 100%;
+
+    padding: 0 20px 22px;
+
+}
+
+
+.category-scroll {
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+}
+
+
+.category {
+
+    border: 1px solid #d9d9d9;
+
+    background: #ffffff;
+
+    color: #333333;
+
+    padding: 8px 13px;
+
+    border-radius: 3px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+}
+
+
+.category:hover,
+.category.active {
+
+    background: #000000;
+
+    color: #ffffff;
+
+    border-color: #000000;
+
+}
+
+
+/* =====================================
+   GRELHA DE OFERTAS
+===================================== */
+
+.offers-section {
+
+    width: 100%;
+
+    max-width: 1500px;
+
+    margin: 0 auto;
+
+    padding: 0 20px 60px;
+
+}
+
+
+.offers-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 16px;
+
+}
+
+
+/* =====================================
+   CARTÃO
+===================================== */
+
+.offer-card {
+
+    background: #ffffff;
+
+    border: 1px solid #dddddd;
+
+    padding: 15px;
+
+    transition:
+        transform .2s,
+        box-shadow .2s;
+
+}
+
+
+.offer-card:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.10);
+
+}
+
+
+/* =====================================
+   IMAGEM
+===================================== */
+
+.offer-link {
+
+    display: block;
+
+    width: 100%;
+
+}
+
+
+.offer-image {
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    background: #eeeeee;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+.offer-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+
+    transition: transform .3s;
+
+}
+
+
+.offer-card:hover .offer-image img {
+
+    transform: scale(1.02);
+
+}
+
+
+/* =====================================
+   QUANDO NÃO HÁ IMAGEM
+===================================== */
+
+.no-image {
+
+    color: #999999;
+
+    font-size: 13px;
+
+}
+
+
+/* =====================================
+   TEXTO DISCRETO
+===================================== */
+
+.offer-info {
+
+    padding-top: 10px;
+
+}
+
+
+.offer-category {
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    color: #888888;
+
+    text-transform: uppercase;
+
+}
+
+
+.offer-title {
+
+    margin: 3px 0 0;
+
+    font-size: 13px;
+
+    line-height: 1.25;
+
+}
+
+
+/* =====================================
+   RESULTADO VAZIO
+===================================== */
+
+.empty {
+
+    text-align: center;
+
+    padding: 60px 20px;
+
+    color: #777777;
+
+}
+
+
+/* =====================================
+   FOOTER
+===================================== */
+
+footer {
+
+    background: #000000;
+
+    color: #ffffff;
+
+}
+
+
+.footer-inner {
+
+    min-height: 75px;
+
+    padding: 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    font-size: 10px;
+
+}
+
+
+.footer-inner strong {
+
+    font-size: 18px;
+
+}
+
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media (max-width: 1100px) {
+
+    .main-menu {
+
+        gap: 10px;
+
+    }
+
+
+    .main-menu a {
+
+        font-size: 8px;
+
+    }
+
+
+    .search-box {
+
+        width: 130px;
+
+    }
+
+
+    .offers-grid {
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+    }
+
+}
+
+
+/* =====================================
+   TABLET PEQUENO
+===================================== */
+
+@media (max-width: 850px) {
+
+    .header-inner {
+
+        height: 60px;
+
+    }
+
+
+    .menu-button {
+
+        display: block;
+
+        order: 2;
+
+    }
+
+
+    .logo {
+
+        order: 1;
+
+    }
+
+
+    .header-right {
+
+        order: 3;
+
+        margin-left: auto;
+
+    }
+
+
+    .main-menu {
+
+        display: none;
+
+        position: absolute;
+
+        top: 60px;
+
+        left: 0;
+
+        right: 0;
+
+        background: #000000;
+
+        padding: 20px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 18px;
+
+        border-top: 1px solid #222222;
+
+    }
+
+
+    .main-menu.open {
+
+        display: flex;
+
+    }
+
+
+    .main-menu a {
+
+        font-size: 12px;
+
+    }
+
+
+    .offers-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+
+    .top-space {
+
+        height: 35px;
+
+    }
+
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 600px) {
+
+    .header-inner {
+
+        padding: 0 12px;
+
+    }
+
+
+    .logo {
+
+        font-size: 24px;
+
+    }
+
+
+    .search-box {
+
+        display: none;
+
+    }
+
+
+    .login {
+
+        display: none;
+
+    }
+
+
+    .language {
+
+        width: 28px;
+
+        height: 28px;
+
+    }
+
+
+    .category-bar {
+
+        padding:
+            10px 12px 18px;
+
+    }
+
+
+    .category-scroll {
+
+        justify-content: flex-start;
+
+        flex-wrap: nowrap;
+
+        overflow-x: auto;
+
+        scrollbar-width: none;
+
+        padding-bottom: 5px;
+
+    }
+
+
+    .category-scroll::-webkit-scrollbar {
+
+        display: none;
+
+    }
+
+
+    .category {
+
+        flex-shrink: 0;
+
+        font-size: 10px;
+
+    }
+
+
+    .offers-section {
+
+        padding:
+            0 10px 40px;
+
+    }
+
+
+    .offers-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+
+    }
+
+
+    .offer-card {
+
+        padding: 10px;
+
+    }
+
+
+    .offer-image {
+
+        aspect-ratio: 4 / 3;
+
+    }
+
+
+    .offer-info {
+
+        display: none;
+
+    }
+
+
+    .footer-inner {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+}

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="pt-PT">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1">
+
+    <title>CenasTop - Administração</title>
+
+    <link
+        rel="stylesheet"
+        href="admin.css">
+
+</head>
+
+<body>
+
+<header class="admin-header">
+
+    <div class="admin-logo">
+        CENAS<span>TOP</span>
+    </div>
+
+    <div>
+        Administração
+    </div>
+
+</header>
+
+
+<main class="admin-container">
+
+    <section class="admin-title">
+
+        <div>
+
+            <h1>Promoções</h1>
+
+            <p>
+                Adicione e organize as promoções do CenasTop.
+            </p>
+
+        </div>
+
+        <a href="index.html">
+            Ver site →
+        </a>
+
+    </section>
+
+
+    <!-- NOVA PROMOÇÃO -->
+
+    <section class="admin-card">
+
+        <h2>Nova promoção</h2>
+
+
+        <form id="offerForm">
+
+
+            <div class="form-group">
+
+                <label for="title">
+                    Título
+                </label>
+
+                <input
+                    id="title"
+                    type="text"
+                    placeholder="Ex.: Promoção de verão"
+                    required>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="category">
+                        Categoria
+                    </label>
+
+                    <select id="category" required>
+
+                        <option value="">
+                            Escolher categoria
+                        </option>
+
+                        <option>
+                            Desporto e Lazer
+                        </option>
+
+                        <option>
+                            Viagens e Férias
+                        </option>
+
+                        <option>
+                            Roupa e Acessórios
+                        </option>
+
+                        <option>
+                            Perfumes e Cosmética
+                        </option>
+
+                        <option>
+                            Tecnologia
+                        </option>
+
+                        <option>
+                            Casa e Jardim
+                        </option>
+
+                        <option>
+                            Saúde e Bem Estar
+                        </option>
+
+                        <option>
+                            Marketplace
+                        </option>
+
+                        <option>
+                            Alimentação
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="date">
+                        Data
+                    </label>
+
+                    <input
+                        id="date"
+                        type="date"
+                        required>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="link">
+                    Link da promoção
+                </label>
+
+                <input
+                    id="link"
+                    type="url"
+                    placeholder="https://..."
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="image">
+                    Imagem
+                </label>
+
+                <input
+                    id="image"
+                    type="file"
+                    accept="image/*"
+                    required>
+
+                <small>
+                    JPG, PNG ou WebP
+                </small>
+
+            </div>
+
+
+            <div
+                id="preview"
+                class="image-preview">
+            </div>
+
+
+            <button
+                type="submit"
+                class="save-button">
+
+                Adicionar promoção
+
+            </button>
+
+
+        </form>
+
+    </section>
+
+
+    <!-- LISTA -->
+
+    <section class="admin-card">
+
+        <div class="list-header">
+
+            <div>
+
+                <h2>Promoções existentes</h2>
+
+                <p id="offerCount">
+                    0 promoções
+                </p>
+
+            </div>
+
+            <button
+                id="clearAll"
+                class="danger-button">
+
+                Apagar todas
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="offerList"
+            class="offer-list">
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="admin.js"></script>
+
+</body>
+
+</html>

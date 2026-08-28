@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description"
+          content="CenasTop - as melhores oportunidades, promoções e descontos.">
+
+    <title>CenasTop - Promoções e Oportunidades</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="site-header">
+
+    <div class="header-inner">
+
+        <a href="#" class="logo">
+            CENAS<span>TOP</span>
+        </a>
+
+        <button
+            class="menu-button"
+            id="menuButton"
+            aria-label="Abrir menu">
+            ☰
+        </button>
+
+        <nav class="main-menu" id="mainMenu">
+
+            <a href="#ofertas">OFERTAS</a>
+            <a href="#categorias">CATEGORIAS</a>
+
+            <a href="#" data-category="Desporto e Lazer">
+                DESPORTO E LAZER
+            </a>
+
+            <a href="#" data-category="Viagens e Férias">
+                VIAGENS E FÉRIAS
+            </a>
+
+            <a href="#" data-category="Roupa e Acessórios">
+                ROUPA E ACESSÓRIOS
+            </a>
+
+            <a href="#" data-category="Perfumes e Cosmética">
+                PERFUMES E COSMÉTICA
+            </a>
+
+            <a href="#" data-category="Tecnologia">
+                TECNOLOGIA
+            </a>
+
+            <a href="#" data-category="Casa e Jardim">
+                CASA E JARDIM
+            </a>
+
+            <a href="#" data-category="Saúde e Bem Estar">
+                SAÚDE E BEM ESTAR
+            </a>
+
+            <a href="#" data-category="Marketplace">
+                MARKETPLACE
+            </a>
+
+            <a href="#" data-category="Alimentação">
+                ALIMENTAÇÃO
+            </a>
+
+        </nav>
+
+
+        <div class="header-right">
+
+            <div class="search-box">
+
+                <input
+                    id="search"
+                    type="search"
+                    placeholder="Pesquisar">
+
+                <span>⌕</span>
+
+            </div>
+
+            <a href="#" class="login">
+                LOGIN
+            </a>
+
+            <button class="language active">
+                PT
+            </button>
+
+            <button class="language">
+                EN
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <section class="top-space"></section>
+
+
+    <section id="categorias" class="category-bar">
+
+        <div class="category-scroll">
+
+            <button class="category active" data-category="Todas">
+                TODAS
+            </button>
+
+            <button class="category" data-category="Desporto e Lazer">
+                DESPORTO E LAZER
+            </button>
+
+            <button class="category" data-category="Viagens e Férias">
+                VIAGENS E FÉRIAS
+            </button>
+
+            <button class="category" data-category="Roupa e Acessórios">
+                ROUPA E ACESSÓRIOS
+            </button>
+
+            <button class="category" data-category="Perfumes e Cosmética">
+                PERFUMES E COSMÉTICA
+            </button>
+
+            <button class="category" data-category="Tecnologia">
+                TECNOLOGIA
+            </button>
+
+            <button class="category" data-category="Casa e Jardim">
+                CASA E JARDIM
+            </button>
+
+            <button class="category" data-category="Saúde e Bem Estar">
+                SAÚDE E BEM ESTAR
+            </button>
+
+            <button class="category" data-category="Marketplace">
+                MARKETPLACE
+            </button>
+
+            <button class="category" data-category="Alimentação">
+                ALIMENTAÇÃO
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <section id="ofertas" class="offers-section">
+
+        <div class="offers-grid" id="offers"></div>
+
+        <p id="empty" class="empty" hidden>
+            Não encontrámos ofertas.
+        </p>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-inner">
+
+        <strong>CENAS<span>TOP</span></strong>
+
+        <span>
+            © 2026 CenasTop
+        </span>
+
+        <span>
+            Links de afiliados podem gerar uma comissão.
+        </span>
+
+    </div>
+
+</footer>
+
+
+<script src="ofertas.js"></script>
+<script src="script.js"></script>
+
+</body>
+
+</html>
