@@ -1,326 +1,192 @@
-const form =
-    document.querySelector("#offerForm");
+const form = document.querySelector("#offerForm");
+const imageInput = document.querySelector("#image");
+const preview = document.querySelector("#preview");
+const offerList = document.querySelector("#offerList");
+const offerCount = document.querySelector("#offerCount");
+const clearAll = document.querySelector("#clearAll");
+const dateInput = document.querySelector("#date");
+const passwordInput = document.querySelector("#password");
+const statusBox = document.querySelector("#status");
 
-const imageInput =
-    document.querySelector("#image");
-
-const preview =
-    document.querySelector("#preview");
-
-const offerList =
-    document.querySelector("#offerList");
-
-const offerCount =
-    document.querySelector("#offerCount");
-
-const clearAll =
-    document.querySelector("#clearAll");
-
-
-/*
-    Nesta primeira versão usamos
-    localStorage.
-
-    Mais tarde substituímos isto
-    pela base de dados Cloudflare D1.
-*/
-
-
-let promocoes =
-    JSON.parse(
-        localStorage.getItem("cenastop_promocoes")
-    ) || [];
-
-
-/* =========================
-   DATA
-========================= */
-
-const dateInput =
-    document.querySelector("#date");
-
-const hoje =
-    new Date().toISOString().split("T")[0];
-
+const hoje = new Date().toISOString().split("T")[0];
 dateInput.value = hoje;
 
-
-/* =========================
-   PREVISUALIZAÇÃO
-========================= */
-
-imageInput.addEventListener(
-    "change",
-    function () {
-
-        const ficheiro =
-            this.files[0];
-
-        if (!ficheiro) {
-
-            preview.innerHTML = "";
-
-            return;
-
-        }
-
-
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            function (event) {
-
-                preview.innerHTML = `
-
-                    <img
-                        src="${event.target.result}"
-                        alt="Pré-visualização">
-
-                `;
-
-            };
-
-
-        reader.readAsDataURL(ficheiro);
-
-    }
-);
-
-
-/* =========================
-   GUARDAR
-========================= */
-
-form.addEventListener(
-    "submit",
-    function (event) {
-
-        event.preventDefault();
-
-
-        const title =
-            document.querySelector("#title").value;
-
-        const category =
-            document.querySelector("#category").value;
-
-        const link =
-            document.querySelector("#link").value;
-
-        const date =
-            document.querySelector("#date").value;
-
-        const file =
-            imageInput.files[0];
-
-
-        if (!file) {
-
-            alert("Escolha uma imagem.");
-
-            return;
-
-        }
-
-
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            function (event) {
-
-                const promocao = {
-
-                    id: Date.now(),
-
-                    titulo: title,
-
-                    categoria: category,
-
-                    link: link,
-
-                    data: date,
-
-                    imagem: event.target.result
-
-                };
-
-
-                promocoes.unshift(
-                    promocao
-                );
-
-
-                guardar();
-
-                mostrarPromocoes();
-
-                form.reset();
-
-                dateInput.value = hoje;
-
-                preview.innerHTML = "";
-
-            };
-
-
-        reader.readAsDataURL(file);
-
-    }
-);
-
-
-/* =========================
-   GUARDAR LOCALMENTE
-========================= */
-
-function guardar() {
-
-    localStorage.setItem(
-        "cenastop_promocoes",
-        JSON.stringify(promocoes)
-    );
-
+function status(message, error = false) {
+  statusBox.textContent = message;
+  statusBox.style.color = error ? "#b00020" : "";
 }
 
+imageInput.addEventListener("change", function () {
+  const file = this.files[0];
+  preview.innerHTML = "";
+  if (!file) return;
 
-/* =========================
-   MOSTRAR
-========================= */
+  const reader = new FileReader();
+  reader.onload = event => {
+    preview.innerHTML = `<img src="${event.target.result}" alt="Pré-visualização">`;
+  };
+  reader.readAsDataURL(file);
+});
 
-function mostrarPromocoes() {
+async function api(path, options = {}) {
+  const password = passwordInput.value;
+  const headers = new Headers(options.headers || {});
+  headers.set("X-Admin-Password", password);
+  if (options.body && !headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
+  }
 
-    offerList.innerHTML = "";
+  const response = await fetch(path, {...options, headers});
+  const data = await response.json().catch(() => ({}));
 
+  if (!response.ok) {
+    throw new Error(data.error || `Erro ${response.status}`);
+  }
+  return data;
+}
 
-    offerCount.textContent =
-        `${promocoes.length} promoção` +
-        (promocoes.length === 1
-            ? ""
-            : "ões");
+async function carregarPromocoes() {
+  try {
+    const data = await fetch("/api/ofertas").then(r => r.json());
+    mostrarPromocoes(data.ofertas || []);
+  } catch (e) {
+    status("Não foi possível carregar as promoções.", true);
+  }
+}
 
+form.addEventListener("submit", async function (event) {
+  event.preventDefault();
 
-    promocoes.forEach(
-        promocao => {
+  const title = document.querySelector("#title").value.trim();
+  const category = document.querySelector("#category").value;
+  const link = document.querySelector("#link").value.trim();
+  const date = dateInput.value;
+  const file = imageInput.files[0];
 
-            const item =
-                document.createElement("div");
+  if (!file) {
+    status("Escolha uma imagem.", true);
+    return;
+  }
 
-            item.className =
-                "offer-item";
+  if (!passwordInput.value) {
+    status("Introduza a palavra-passe de administração.", true);
+    return;
+  }
 
+  try {
+    status("A preparar a imagem...");
 
-            item.innerHTML = `
+    const imagem = await comprimirImagem(file);
 
-                <img
-                    src="${promocao.imagem}"
-                    alt="${promocao.titulo}">
+    status("A guardar promoção...");
 
+    await api("/api/ofertas", {
+      method: "POST",
+      body: JSON.stringify({
+        titulo: title,
+        categoria: category,
+        link,
+        data: date,
+        imagem
+      })
+    });
 
-                <div>
+    status("Promoção adicionada com sucesso.");
+    form.reset();
+    dateInput.value = date;
+    preview.innerHTML = "";
+    await carregarPromocoes();
+  } catch (e) {
+    status(e.message, true);
+  }
+});
 
-                    <h3>
-                        ${promocao.titulo}
-                    </h3>
+async function comprimirImagem(file) {
+  const dataUrl = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 
-                    <p>
-                        ${promocao.categoria}
-                        ·
-                        ${promocao.data}
-                    </p>
+  const img = await new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = reject;
+    image.src = dataUrl;
+  });
 
-                </div>
+  const max = 1200;
+  const scale = Math.min(1, max / Math.max(img.width, img.height));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.round(img.width * scale);
+  canvas.height = Math.round(img.height * scale);
 
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                <button
-                    class="delete-button"
-                    data-id="${promocao.id}">
+  return canvas.toDataURL("image/webp", 0.78);
+}
 
-                    Apagar
+function mostrarPromocoes(promocoes) {
+  offerList.innerHTML = "";
+  offerCount.textContent =
+    `${promocoes.length} promoção` + (promocoes.length === 1 ? "" : "ões");
 
-                </button>
+  if (!promocoes.length) {
+    offerList.innerHTML = "<p>Nenhuma promoção encontrada.</p>";
+    return;
+  }
 
-            `;
+  promocoes.forEach(promocao => {
+    const item = document.createElement("div");
+    item.className = "offer-item";
 
+    item.innerHTML = `
+      <img src="${promocao.imagem || ""}" alt="">
+      <div>
+        <h3>${escapeHtml(promocao.titulo)}</h3>
+        <p>${escapeHtml(promocao.categoria)} · ${escapeHtml(promocao.data)}</p>
+      </div>
+      <button class="delete-button" data-id="${promocao.id}">Apagar</button>
+    `;
 
-            offerList.appendChild(item);
+    offerList.appendChild(item);
+  });
 
-        }
-    );
+  offerList.querySelectorAll(".delete-button").forEach(button => {
+    button.addEventListener("click", async () => {
+      if (!confirm("Apagar esta promoção?")) return;
 
-
-    document
-        .querySelectorAll(".delete-button")
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                function () {
-
-                    const id =
-                        Number(
-                            this.dataset.id
-                        );
-
-
-                    promocoes =
-                        promocoes.filter(
-                            promocao =>
-                                promocao.id !== id
-                        );
-
-
-                    guardar();
-
-                    mostrarPromocoes();
-
-                }
-            );
-
+      try {
+        await api(`/api/ofertas?id=${encodeURIComponent(button.dataset.id)}`, {
+          method: "DELETE"
         });
-
+        await carregarPromocoes();
+        status("Promoção apagada.");
+      } catch (e) {
+        status(e.message, true);
+      }
+    });
+  });
 }
 
+clearAll.addEventListener("click", async () => {
+  if (!confirm("Tem a certeza que quer apagar todas as promoções?")) return;
 
-/* =========================
-   APAGAR TUDO
-========================= */
+  try {
+    await api("/api/ofertas", {method: "DELETE"});
+    await carregarPromocoes();
+    status("Todas as promoções foram apagadas.");
+  } catch (e) {
+    status(e.message, true);
+  }
+});
 
-clearAll.addEventListener(
-    "click",
-    function () {
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+  }[char]));
+}
 
-        if (!promocoes.length) {
-            return;
-        }
-
-
-        const confirmar =
-            confirm(
-                "Tem a certeza que quer apagar todas as promoções?"
-            );
-
-
-        if (!confirmar) {
-            return;
-        }
-
-
-        promocoes = [];
-
-        guardar();
-
-        mostrarPromocoes();
-
-    }
-);
-
-
-/* =========================
-   INICIAR
-========================= */
-
-mostrarPromocoes();
+carregarPromocoes();
