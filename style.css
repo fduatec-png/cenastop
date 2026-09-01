@@ -1,46 +1,44 @@
-/* =====================================================
-   50PORCENTO — SITE PRINCIPAL
-   DESIGN MODERNO
-===================================================== */
+/* =========================================
+   50PORCENTO
+   DESIGN PRINCIPAL
+========================================= */
 
 :root {
-    --black: #080808;
+
+    --black: #050505;
     --white: #ffffff;
 
     --background: #f6f6f4;
     --surface: #ffffff;
 
-    --border: #e5e5e2;
-
-    --text: #171717;
+    --text: #111111;
     --muted: #777777;
 
+    --border: #e5e5e2;
+
     --accent: #ff5a36;
-    --accent-dark: #e94b29;
 
-    --radius: 12px;
+    --radius: 14px;
 
-    --shadow:
-        0 4px 18px rgba(0, 0, 0, .06);
-
-    --shadow-hover:
-        0 14px 35px rgba(0, 0, 0, .12);
 }
 
 
-/* =====================================================
-   BASE
-===================================================== */
+/* =========================================
+   RESET
+========================================= */
 
 * {
     box-sizing: border-box;
 }
 
+
 html {
     scroll-behavior: smooth;
 }
 
+
 body {
+
     margin: 0;
 
     background: var(--background);
@@ -53,19 +51,26 @@ body {
         sans-serif;
 
     -webkit-font-smoothing: antialiased;
+
 }
 
 
-/* =====================================================
+a {
+    color: inherit;
+}
+
+
+button,
+input {
+    font: inherit;
+}
+
+
+/* =========================================
    HEADER
-===================================================== */
+========================================= */
 
 .site-header {
-    width: 100%;
-
-    background: rgba(8, 8, 8, .97);
-
-    color: var(--white);
 
     position: sticky;
 
@@ -73,56 +78,69 @@ body {
 
     z-index: 1000;
 
-    box-shadow:
-        0 2px 12px rgba(0, 0, 0, .18);
+    background: rgba(5, 5, 5, .96);
+
+    border-bottom: 1px solid #222;
+
+    backdrop-filter: blur(12px);
+
 }
 
 
 .header-inner {
-    min-height: 64px;
 
-    max-width: 1700px;
+    width: min(
+        calc(100% - 40px),
+        1500px
+    );
 
-    margin: 0 auto;
+    height: 72px;
 
-    padding: 0 24px;
+    margin: auto;
 
     display: flex;
 
     align-items: center;
 
-    gap: 28px;
+    gap: 32px;
+
 }
 
 
-/* =====================================================
+/* =========================================
    LOGO
-===================================================== */
+========================================= */
 
 .logo {
+
     flex-shrink: 0;
 
-    color: var(--white);
+    color: #ffffff;
 
-    font-size: 26px;
+    text-decoration: none;
 
-    font-weight: 900;
+    font-size: 25px;
 
-    letter-spacing: -1.5px;
+    font-weight: 950;
+
+    letter-spacing: -1.8px;
 
     line-height: 1;
+
 }
+
 
 .logo span {
-    color: var(--white);
+    color: #ffffff;
 }
 
 
-/* =====================================================
-   MENU PRINCIPAL
-===================================================== */
+/* =========================================
+   MENU
+========================================= */
 
 .main-menu {
+
     flex: 1;
 
     display: flex;
@@ -131,69 +149,83 @@ body {
 
     justify-content: center;
 
-    gap: 20px;
+    gap: 17px;
 
     white-space: nowrap;
+
 }
 
 
 .main-menu a {
-    color: var(--white);
 
-    font-size: 10px;
+    position: relative;
 
-    font-weight: 700;
+    color: #ffffff;
 
     text-decoration: none;
 
-    opacity: .88;
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: -.1px;
+
+    opacity: .82;
 
     transition:
         opacity .2s,
-        transform .2s;
+        color .2s;
+
 }
 
 
 .main-menu a:hover {
+
     opacity: 1;
 
-    transform: translateY(-1px);
+    color: var(--accent);
+
 }
 
 
-/* =====================================================
-   DIREITA DO HEADER
-===================================================== */
+/* =========================================
+   DIREITA
+========================================= */
 
 .header-right {
+
     display: flex;
 
     align-items: center;
 
-    gap: 10px;
+    gap: 15px;
 
     flex-shrink: 0;
+
 }
 
 
 .search-box {
-    width: 190px;
+
+    width: 205px;
 
     height: 38px;
-
-    background: var(--white);
-
-    border-radius: 7px;
 
     display: flex;
 
     align-items: center;
 
+    background: #ffffff;
+
+    border-radius: 8px;
+
     overflow: hidden;
+
 }
 
 
 .search-box input {
+
     width: 100%;
 
     height: 100%;
@@ -202,13 +234,14 @@ body {
 
     outline: 0;
 
+    background: transparent;
+
     padding: 0 12px;
+
+    color: #111111;
 
     font-size: 12px;
 
-    color: var(--text);
-
-    background: transparent;
 }
 
 
@@ -218,93 +251,382 @@ body {
 
 
 .search-box span {
+
     width: 34px;
 
     display: flex;
 
-    align-items: center;
-
     justify-content: center;
+
+    align-items: center;
 
     color: #111111;
 
-    font-size: 18px;
+    font-size: 19px;
+
 }
 
 
 .login {
-    color: var(--white);
 
-    font-size: 9px;
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 10px;
 
     font-weight: 800;
 
-    text-decoration: none;
+    transition: color .2s;
+
 }
 
 
 .login:hover {
-    text-decoration: underline;
+    color: var(--accent);
 }
 
 
-/* =====================================================
-   BOTÃO MOBILE
-===================================================== */
+/* =========================================
+   MENU MOBILE
+========================================= */
 
 .menu-button {
-    display: none;
 
-    background: transparent;
+    display: none;
 
     border: 0;
 
-    color: var(--white);
+    background: transparent;
+
+    color: #ffffff;
 
     font-size: 25px;
 
     cursor: pointer;
 
-    padding: 4px;
 }
 
 
-/* =====================================================
-   ESPAÇO SUPERIOR
-===================================================== */
+/* =========================================
+   HERO
+========================================= */
 
-.top-space {
-    height: 54px;
+.hero {
+
+    background: var(--black);
+
+    color: #ffffff;
+
+    overflow: hidden;
+
 }
 
 
-/* =====================================================
-   CATEGORIAS
-===================================================== */
+.hero-inner {
 
-.category-bar {
-    width: 100%;
+    width: min(
+        calc(100% - 40px),
+        1500px
+    );
 
-    padding: 0 24px 28px;
-}
+    min-height: 360px;
 
-
-.category-scroll {
-    max-width: 1500px;
-
-    margin: 0 auto;
+    margin: auto;
 
     display: flex;
 
-    justify-content: center;
+    align-items: center;
 
-    flex-wrap: wrap;
+    justify-content: space-between;
+
+    position: relative;
+
+}
+
+
+.hero-content {
+
+    max-width: 720px;
+
+    padding: 55px 0;
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+.hero-label {
+
+    display: inline-flex;
+
+    align-items: center;
 
     gap: 8px;
+
+    margin-bottom: 18px;
+
+    color: var(--accent);
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+
+}
+
+
+.hero-label::before {
+
+    content: "";
+
+    width: 24px;
+
+    height: 2px;
+
+    background: var(--accent);
+
+}
+
+
+.hero h1 {
+
+    max-width: 720px;
+
+    margin: 0;
+
+    font-size: clamp(
+        38px,
+        5vw,
+        72px
+    );
+
+    line-height: .98;
+
+    letter-spacing: -3px;
+
+    font-weight: 900;
+
+}
+
+
+.hero h1 strong {
+
+    display: block;
+
+    color: var(--accent);
+
+}
+
+
+.hero p {
+
+    max-width: 560px;
+
+    margin: 25px 0 30px;
+
+    color: #bdbdbd;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+
+}
+
+
+.hero-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 13px 18px;
+
+    background: var(--accent);
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    transition:
+        transform .2s,
+        background .2s;
+
+}
+
+
+.hero-button span {
+    font-size: 16px;
+}
+
+
+.hero-button:hover {
+
+    transform: translateY(-2px);
+
+    background: #ff704f;
+
+}
+
+
+/* =========================================
+   MARCA 50%
+========================================= */
+
+.hero-mark {
+
+    position: absolute;
+
+    right: 30px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #161616;
+
+    font-size: clamp(
+        180px,
+        27vw,
+        430px
+    );
+
+    font-weight: 950;
+
+    letter-spacing: -35px;
+
+    line-height: .8;
+
+    user-select: none;
+
+}
+
+
+.hero-mark small {
+
+    color: #1f1f1f;
+
+    font-size: .35em;
+
+    vertical-align: top;
+
+    letter-spacing: -10px;
+
+}
+
+
+/* =========================================
+   CATEGORIAS
+========================================= */
+
+.category-section {
+
+    width: min(
+        calc(100% - 40px),
+        1500px
+    );
+
+    margin: 0 auto;
+
+    padding: 60px 0 35px;
+
+}
+
+
+.section-heading {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    gap: 30px;
+
+    margin-bottom: 22px;
+
+}
+
+
+.eyebrow {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--accent);
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+
+}
+
+
+.section-heading h2,
+.offers-header h2 {
+
+    margin: 0;
+
+    font-size: 28px;
+
+    letter-spacing: -1px;
+
+}
+
+
+.section-heading p {
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+/* =========================================
+   BOTÕES DE CATEGORIA
+========================================= */
+
+.category-scroll {
+
+    display: flex;
+
+    gap: 8px;
+
+    overflow-x: auto;
+
+    padding-bottom: 5px;
+
+    scrollbar-width: none;
+
+}
+
+
+.category-scroll::-webkit-scrollbar {
+    display: none;
 }
 
 
 .category {
+
+    flex-shrink: 0;
+
     border: 1px solid var(--border);
 
     background: var(--surface);
@@ -313,7 +635,7 @@ body {
 
     padding: 10px 15px;
 
-    border-radius: 7px;
+    border-radius: 999px;
 
     font-size: 10px;
 
@@ -325,64 +647,93 @@ body {
         background .2s,
         color .2s,
         border-color .2s,
-        transform .2s,
-        box-shadow .2s;
+        transform .2s;
+
 }
 
 
 .category:hover {
-    border-color: #bbbbbb;
+
+    border-color: #111111;
 
     transform: translateY(-1px);
 
-    box-shadow:
-        0 3px 10px rgba(0, 0, 0, .06);
 }
 
 
 .category.active {
+
     background: var(--black);
 
-    color: var(--white);
+    color: #ffffff;
 
     border-color: var(--black);
 
-    box-shadow:
-        0 4px 12px rgba(0, 0, 0, .14);
 }
 
 
-/* =====================================================
-   ÁREA DAS OFERTAS
-===================================================== */
+/* =========================================
+   OFERTAS
+========================================= */
 
 .offers-section {
-    width: 100%;
 
-    max-width: 1500px;
+    width: min(
+        calc(100% - 40px),
+        1500px
+    );
 
-    margin: 0 auto;
+    margin: auto;
 
-    padding:
-        0 24px 80px;
+    padding: 35px 0 80px;
+
 }
 
 
+.offers-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    margin-bottom: 24px;
+
+}
+
+
+.offers-note {
+
+    color: #999999;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================
+   GRELHA
+========================================= */
+
 .offers-grid {
+
     display: grid;
 
     grid-template-columns:
         repeat(4, minmax(0, 1fr));
 
-    gap: 22px;
+    gap: 20px;
+
 }
 
 
-/* =====================================================
+/* =========================================
    CARTÃO
-===================================================== */
+========================================= */
 
 .offer-card {
+
     min-width: 0;
 
     background: var(--surface);
@@ -391,60 +742,48 @@ body {
 
     border-radius: var(--radius);
 
-    padding: 10px;
-
     overflow: hidden;
-
-    box-shadow: var(--shadow);
 
     transition:
         transform .25s ease,
         box-shadow .25s ease,
         border-color .25s ease;
+
 }
 
 
 .offer-card:hover {
+
     transform: translateY(-5px);
 
-    border-color: #d5d5d2;
+    border-color: #d2d2cf;
 
-    box-shadow: var(--shadow-hover);
+    box-shadow:
+        0 18px 40px rgba(0, 0, 0, .09);
+
 }
 
 
-/* =====================================================
-   LINK DA OFERTA
-===================================================== */
+/* =========================================
+   LINK / IMAGEM
+========================================= */
 
 .offer-link {
-    display: block;
 
-    width: 100%;
+    display: block;
 
     text-decoration: none;
 
-    color: inherit;
 }
 
 
-/* =====================================================
-   IMAGEM
-===================================================== */
-
 .offer-image {
+
     width: 100%;
 
     aspect-ratio: 1 / 1;
 
-    background:
-        linear-gradient(
-            135deg,
-            #f1f1f1,
-            #e9e9e9
-        );
-
-    border-radius: 8px;
+    background: #eeeeee;
 
     overflow: hidden;
 
@@ -453,10 +792,12 @@ body {
     align-items: center;
 
     justify-content: center;
+
 }
 
 
 .offer-image img {
+
     width: 100%;
 
     height: 100%;
@@ -467,141 +808,238 @@ body {
 
     transition:
         transform .35s ease;
+
 }
 
 
-.offer-card:hover .offer-image img {
+.offer-card:hover
+.offer-image img {
+
     transform: scale(1.035);
+
 }
 
 
-/* =====================================================
+/* =========================================
    SEM IMAGEM
-===================================================== */
+========================================= */
 
 .no-image {
+
     color: #999999;
 
-    font-size: 13px;
+    font-size: 12px;
 
-    text-align: center;
 }
 
 
-/* =====================================================
-   INFORMAÇÃO DA OFERTA
-===================================================== */
+/* =========================================
+   TEXTO
+========================================= */
 
 .offer-info {
-    padding:
-        12px 4px 5px;
+
+    padding: 15px 16px 17px;
+
 }
 
 
 .offer-category {
+
+    margin-bottom: 5px;
+
+    color: #999999;
+
     font-size: 9px;
 
-    font-weight: 800;
-
-    color: var(--accent);
+    font-weight: 900;
 
     text-transform: uppercase;
 
-    letter-spacing: .4px;
+    letter-spacing: .6px;
 
-    margin-bottom: 4px;
 }
 
 
 .offer-title {
+
     margin: 0;
 
-    font-size: 14px;
+    color: #111111;
+
+    font-size: 15px;
 
     line-height: 1.3;
 
-    font-weight: 700;
+    font-weight: 800;
 
-    color: var(--text);
 }
 
 
-/* =====================================================
+/* =========================================
    RESULTADO VAZIO
-===================================================== */
+========================================= */
 
 .empty {
+
+    margin: 0;
+
+    padding: 80px 20px;
+
+    background: #ffffff;
+
+    border: 1px dashed #d8d8d4;
+
+    border-radius: var(--radius);
+
     text-align: center;
 
-    padding:
-        90px 20px;
+    color: #777777;
 
-    color: var(--muted);
+    font-size: 13px;
 
-    font-size: 14px;
 }
 
 
-/* =====================================================
+/* =========================================
    FOOTER
-===================================================== */
+========================================= */
 
 footer {
+
     background: var(--black);
 
-    color: var(--white);
+    color: #ffffff;
+
 }
 
 
 .footer-inner {
-    min-height: 90px;
 
-    max-width: 1700px;
+    width: min(
+        calc(100% - 40px),
+        1500px
+    );
 
-    margin: 0 auto;
+    min-height: 150px;
 
-    padding: 20px 24px;
+    margin: auto;
 
-    display: flex;
+    padding: 35px 0;
 
-    justify-content: space-between;
+    display: grid;
+
+    grid-template-columns:
+        1.5fr 1fr 1.5fr;
+
+    gap: 30px;
 
     align-items: center;
 
-    gap: 25px;
+}
+
+
+.footer-brand strong {
+
+    display: block;
+
+    font-size: 20px;
+
+    font-weight: 900;
+
+    letter-spacing: -1px;
+
+}
+
+
+.footer-brand strong span {
+    color: #ffffff;
+}
+
+
+.footer-brand p {
+
+    margin: 8px 0 0;
+
+    color: #777777;
+
+    font-size: 11px;
+
+}
+
+
+.footer-links {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 20px;
+
+}
+
+
+.footer-links a {
+
+    color: #bbbbbb;
+
+    text-decoration: none;
 
     font-size: 10px;
+
+    font-weight: 700;
+
+    transition: color .2s;
+
 }
 
 
-.footer-inner span {
-    color: var(--white);
+.footer-links a:hover {
+    color: var(--accent);
 }
 
 
-.footer-inner strong {
-    font-size: 18px;
+.footer-copy {
 
-    letter-spacing: -.5px;
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    gap: 7px;
+
+    color: #888888;
+
+    font-size: 10px;
+
 }
 
 
-/* =====================================================
+.footer-copy small {
+
+    max-width: 280px;
+
+    text-align: right;
+
+    font-size: 9px;
+
+}
+
+
+/* =========================================
    TABLET
-===================================================== */
+========================================= */
 
 @media (max-width: 1200px) {
 
     .header-inner {
-        gap: 18px;
-
-        padding:
-            0 18px;
+        gap: 20px;
     }
 
 
     .main-menu {
-        gap: 12px;
+        gap: 10px;
     }
 
 
@@ -611,35 +1049,35 @@ footer {
 
 
     .search-box {
-        width: 145px;
+        width: 165px;
     }
 
 
     .offers-grid {
         grid-template-columns:
             repeat(3, minmax(0, 1fr));
-
-        gap: 18px;
     }
 
 }
 
 
-/* =====================================================
+/* =========================================
    TABLET PEQUENO
-===================================================== */
+========================================= */
 
 @media (max-width: 900px) {
 
     .header-inner {
-        min-height: 60px;
+        height: 64px;
     }
 
 
     .menu-button {
+
         display: block;
 
         order: 2;
+
     }
 
 
@@ -649,27 +1087,31 @@ footer {
 
 
     .header-right {
+
         order: 3;
 
         margin-left: auto;
+
     }
 
 
     .main-menu {
+
         display: none;
 
         position: absolute;
 
-        top: 60px;
+        top: 64px;
 
         left: 0;
 
         right: 0;
 
-        background: #080808;
+        padding: 20px;
 
-        padding:
-            20px 22px 24px;
+        background: #050505;
+
+        border-top: 1px solid #222;
 
         flex-direction: column;
 
@@ -677,13 +1119,8 @@ footer {
 
         justify-content: flex-start;
 
-        gap: 17px;
+        gap: 16px;
 
-        border-top:
-            1px solid #222222;
-
-        box-shadow:
-            0 12px 25px rgba(0, 0, 0, .2);
     }
 
 
@@ -697,111 +1134,202 @@ footer {
     }
 
 
-    .offers-grid {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+    .hero-inner {
+        min-height: 330px;
     }
 
 
-    .top-space {
-        height: 35px;
+    .hero-mark {
+        opacity: .8;
+        right: -30px;
+    }
+
+
+    .offers-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+
+    .footer-inner {
+
+        grid-template-columns:
+            1fr 1fr;
+
+    }
+
+
+    .footer-copy {
+
+        align-items: flex-start;
+
+    }
+
+
+    .footer-copy small {
+        text-align: left;
     }
 
 }
 
 
-/* =====================================================
+/* =========================================
    MOBILE
-===================================================== */
+========================================= */
 
 @media (max-width: 600px) {
 
     .header-inner {
-        padding:
-            0 14px;
 
-        gap: 12px;
+        width: calc(100% - 24px);
+
+        height: 60px;
+
     }
 
 
     .logo {
-        font-size: 23px;
+
+        font-size: 22px;
+
     }
 
 
     .search-box,
     .login {
+
         display: none;
+
     }
 
 
-    .category-bar {
-        padding:
-            10px 12px 20px;
+    .hero-inner {
+
+        width: calc(100% - 28px);
+
+        min-height: 400px;
+
     }
 
 
-    .category-scroll {
-        justify-content: flex-start;
+    .hero-content {
 
-        flex-wrap: nowrap;
+        padding: 55px 0;
 
-        overflow-x: auto;
-
-        scrollbar-width: none;
-
-        padding:
-            2px 2px 7px;
     }
 
 
-    .category-scroll::-webkit-scrollbar {
-        display: none;
+    .hero h1 {
+
+        font-size: 43px;
+
+        letter-spacing: -2px;
+
     }
 
 
-    .category {
-        flex-shrink: 0;
+    .hero p {
 
-        padding:
-            9px 13px;
+        max-width: 330px;
 
-        font-size: 9px;
+        font-size: 14px;
+
+    }
+
+
+    .hero-mark {
+
+        right: -45px;
+
+        top: 65%;
+
+        font-size: 230px;
+
+    }
+
+
+    .category-section {
+
+        width: calc(100% - 24px);
+
+        padding-top: 38px;
+
+    }
+
+
+    .section-heading {
+
+        display: block;
+
+        margin-bottom: 18px;
+
+    }
+
+
+    .section-heading p {
+
+        margin-top: 8px;
+
+    }
+
+
+    .section-heading h2,
+    .offers-header h2 {
+
+        font-size: 25px;
+
     }
 
 
     .offers-section {
-        padding:
-            0 12px 45px;
+
+        width: calc(100% - 24px);
+
+        padding-bottom: 55px;
+
+    }
+
+
+    .offers-header {
+
+        display: block;
+
+        margin-bottom: 18px;
+
+    }
+
+
+    .offers-note {
+
+        display: block;
+
+        margin-top: 7px;
+
     }
 
 
     .offers-grid {
+
         grid-template-columns: 1fr;
 
         gap: 16px;
-    }
 
-
-    .offer-card {
-        padding: 9px;
-
-        border-radius: 11px;
     }
 
 
     .offer-image {
+
         aspect-ratio: 4 / 3;
 
-        border-radius: 8px;
     }
 
 
     .offer-info {
-        display: block;
 
-        padding:
-            10px 3px 5px;
+        padding: 13px 14px 15px;
+
     }
 
 
@@ -811,39 +1339,31 @@ footer {
 
 
     .footer-inner {
-        min-height: 110px;
 
-        flex-direction: column;
+        width: calc(100% - 28px);
+
+        grid-template-columns: 1fr;
+
+        padding: 30px 0;
+
+        gap: 25px;
+
+    }
+
+
+    .footer-links {
+
+        justify-content: flex-start;
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .footer-copy {
 
         align-items: flex-start;
 
-        justify-content: center;
-
-        padding:
-            22px 15px;
-
-        gap: 8px;
-    }
-
-}
-
-
-/* =====================================================
-   MOBILE MUITO PEQUENO
-===================================================== */
-
-@media (max-width: 380px) {
-
-    .logo {
-        font-size: 21px;
-    }
-
-
-    .category {
-        font-size: 8px;
-
-        padding:
-            8px 11px;
     }
 
 }
