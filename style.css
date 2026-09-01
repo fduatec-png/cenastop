@@ -1027,6 +1027,241 @@ footer {
 }
 
 
+/* =====================================
+   OFERTA DO DIA
+===================================== */
+
+.daily-offer-section {
+
+    width: 100%;
+
+    max-width: 1500px;
+
+    margin: 0 auto;
+
+    padding: 0 20px 45px;
+
+}
+
+
+.daily-offer-inner {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1.25fr;
+
+    min-height: 360px;
+
+    background: #050505;
+
+    color: #ffffff;
+
+    overflow: hidden;
+
+}
+
+
+.daily-offer-content {
+
+    padding: 45px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: flex-start;
+
+}
+
+
+.daily-offer-label {
+
+    display: inline-block;
+
+    margin-bottom: 18px;
+
+    padding: 7px 10px;
+
+    background: #ff5a36;
+
+    color: #ffffff;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: .8px;
+
+}
+
+
+.daily-offer-category {
+
+    margin-bottom: 8px;
+
+    color: #999999;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: .5px;
+
+}
+
+
+.daily-offer-content h2 {
+
+    max-width: 500px;
+
+    margin: 0 0 28px;
+
+    font-size: clamp(26px, 3vw, 44px);
+
+    line-height: 1.05;
+
+    letter-spacing: -1.5px;
+
+}
+
+
+.daily-offer-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 12px 17px;
+
+    background: #ffffff;
+
+    color: #000000;
+
+    text-decoration: none;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    transition:
+        background .2s,
+        color .2s,
+        transform .2s;
+
+}
+
+
+.daily-offer-button span {
+
+    font-size: 17px;
+
+    line-height: 1;
+
+}
+
+
+.daily-offer-button:hover {
+
+    background: #ff5a36;
+
+    color: #ffffff;
+
+    transform: translateX(3px);
+
+}
+
+
+.daily-offer-image {
+
+    display: block;
+
+    min-height: 360px;
+
+    background: #eeeeee;
+
+    overflow: hidden;
+
+}
+
+
+.daily-offer-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: contain;
+
+    transition: transform .4s;
+
+}
+
+
+.daily-offer-image:hover img {
+
+    transform: scale(1.03);
+
+}
+
+
+/* =====================================
+   OFERTA DO DIA — MOBILE
+===================================== */
+
+@media (max-width: 700px) {
+
+    .daily-offer-section {
+
+        padding:
+            0 10px 35px;
+
+    }
+
+
+    .daily-offer-inner {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .daily-offer-content {
+
+        padding: 28px 24px;
+
+        order: 2;
+
+    }
+
+
+    .daily-offer-image {
+
+        min-height: 260px;
+
+        height: 260px;
+
+        order: 1;
+
+    }
+
+
+    .daily-offer-content h2 {
+
+        font-size: 28px;
+
+        letter-spacing: -1px;
+
+    }
+
+}
 /* =========================================
    TABLET
 ========================================= */
