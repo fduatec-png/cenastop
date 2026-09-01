@@ -365,59 +365,35 @@ function mostrarPromocoes(
 
 
             item.innerHTML = `
+    <img src="${promocao.imagem || ""}" alt="">
 
-                ${imagem}
+    <div>
+        <h3>${escapeHtml(promocao.titulo)}</h3>
+        <p>
+            ${escapeHtml(promocao.categoria)}
+            ·
+            ${escapeHtml(promocao.data)}
+        </p>
+    </div>
 
+    <div class="offer-actions">
 
-                <div class="offer-item-info">
+        <button
+            class="edit-button"
+            data-id="${promocao.id}"
+        >
+            Editar
+        </button>
 
-                    <h3>
-                        ${escapeHtml(
-                            promocao.titulo
-                        )}
-                    </h3>
+        <button
+            class="delete-button"
+            data-id="${promocao.id}"
+        >
+            Apagar
+        </button>
 
-                    <p>
-                        ${escapeHtml(
-                            promocao.categoria
-                        )}
-
-                        ·
-
-                        ${escapeHtml(
-                            promocao.data
-                        )}
-                    </p>
-
-                </div>
-
-
-                <div class="offer-actions">
-
-                    <button
-                        type="button"
-                        class="edit-button"
-                        data-id="${escapeAttribute(
-                            promocao.id
-                        )}"
-                    >
-                        Editar
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="delete-button"
-                        data-id="${escapeAttribute(
-                            promocao.id
-                        )}"
-                    >
-                        Apagar
-                    </button>
-
-                </div>
-
-            `;
+    </div>
+`;
 
 
             offerList.appendChild(
