@@ -2,13 +2,22 @@ export async function onRequest(context) {
   const { request, env } = context;
   const url = new URL(request.url);
 
-  if (request.method === "GET") {
-    const { results } = await env.DB.prepare(
-      "SELECT id, titulo, categoria, data, link, imagem, criado_em FROM promocoes ORDER BY data DESC, id DESC"
-    ).all();
+if (request.method === "GET") {
+  const { results } = await env.DB.prepare(
+    "SELECT id, titulo, categoria, data, link, imagem, criado_em FROM promocoes ORDER BY data DESC, id DESC"
+  ).all();
 
-    return Response.json({ofertas: results || []});
-  }
+  return new Response(
+    JSON.stringify({ ofertas: results || [] }),
+    {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+        "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"
+      }
+    }
+  );
+}
 
   const password = request.headers.get("X-Admin-Password");
   if (!password || password !== env.ADMIN_PASSWORD) {
