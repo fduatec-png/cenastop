@@ -1367,7 +1367,6 @@ footer {
     }
 
 }
-
 /* =========================================
    MELHORIA DOS CARTÕES
 ========================================= */
@@ -1376,70 +1375,88 @@ footer {
     position: relative;
 }
 
+
+/* INDICADOR VER OFERTA */
+
 .offer-overlay {
     position: absolute;
+
     left: 0;
     right: 0;
     bottom: 0;
 
     display: flex;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
 
     padding: 18px;
 
     background: linear-gradient(
         to top,
-        rgba(0, 0, 0, .55),
+        rgba(0, 0, 0, .65),
         transparent
     );
 
+    color: #ffffff;
+
     opacity: 0;
-    transform: translateY(8px);
+
+    transform: translateY(6px);
 
     transition:
         opacity .25s ease,
         transform .25s ease;
+
+    pointer-events: none;
 }
+
 
 .offer-overlay span {
-    background: #000000;
-    color: #ffffff;
-
-    padding: 9px 15px;
-
-    border-radius: 5px;
-
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 800;
 }
+
+
+.offer-overlay strong {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--accent);
+    color: #ffffff;
+
+    font-size: 18px;
+
+    transition:
+        transform .2s ease;
+}
+
 
 .offer-card:hover .offer-overlay {
     opacity: 1;
     transform: translateY(0);
 }
 
-.offer-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+
+.offer-card:hover .offer-overlay strong {
+    transform: translateX(3px);
 }
 
-.offer-arrow {
-    flex-shrink: 0;
 
-    color: #999999;
+/* TÍTULO */
 
-    font-size: 18px;
-
-    transition:
-        color .2s ease,
-        transform .2s ease;
+.offer-title {
+    transition: color .2s ease;
 }
 
-.offer-card:hover .offer-arrow {
-    color: #000000;
-    transform: translateX(4px);
+
+.offer-card:hover .offer-title {
+    color: var(--accent);
 }
 
 
@@ -1449,106 +1466,6 @@ footer {
 
     .offer-overlay {
         display: none;
-    }
-
-    .offer-bottom {
-        gap: 8px;
-    }
-
-    .offer-arrow {
-        font-size: 16px;
-    }
-
-}
-/* =========================================
-   MELHORIA DOS CARTÕES
-========================================= */
-
-.offer-image {
-    position: relative;
-}
-
-.offer-overlay {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    display: flex;
-    justify-content: center;
-
-    padding: 18px;
-
-    background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, .55),
-        transparent
-    );
-
-    opacity: 0;
-    transform: translateY(8px);
-
-    transition:
-        opacity .25s ease,
-        transform .25s ease;
-}
-
-.offer-overlay span {
-    background: #000000;
-    color: #ffffff;
-
-    padding: 9px 15px;
-
-    border-radius: 5px;
-
-    font-size: 11px;
-    font-weight: 800;
-}
-
-.offer-card:hover .offer-overlay {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.offer-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.offer-arrow {
-    flex-shrink: 0;
-
-    color: #999999;
-
-    font-size: 18px;
-
-    transition:
-        color .2s ease,
-        transform .2s ease;
-}
-
-.offer-card:hover .offer-arrow {
-    color: #000000;
-    transform: translateX(4px);
-}
-
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-
-    .offer-overlay {
-        display: none;
-    }
-
-    .offer-bottom {
-        gap: 8px;
-    }
-
-    .offer-arrow {
-        font-size: 16px;
     }
 
 }
