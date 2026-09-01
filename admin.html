@@ -3,90 +3,491 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>50PORCENTO - Administração</title>
+
 <link rel="stylesheet" href="admin.css">
 </head>
+
 <body>
+
 <header class="admin-header">
-  <div class="admin-logo">50<span>PORCENTO</span></div>
+
+  <div class="admin-logo">
+    50<span>PORCENTO</span>
+  </div>
+
   <div>Administração</div>
+
 </header>
 
+
 <main class="admin-container">
+
+
+  <!-- =====================================
+       TÍTULO
+  ====================================== -->
+
   <section class="admin-title">
+
     <div>
+
       <h1>Promoções</h1>
-      <p>Adicione e organize as promoções do 50PORCENTO.</p>
+
+      <p>
+        Adicione e organize as promoções do 50PORCENTO.
+      </p>
+
     </div>
-    <a href="index.html">Ver site →</a>
+
+    <a href="index.html">
+      Ver site →
+    </a>
+
   </section>
 
+
+
+  <!-- =====================================
+       NOVA PROMOÇÃO
+  ====================================== -->
+
   <section class="admin-card">
+
     <h2>Nova promoção</h2>
+
+
     <form id="offerForm">
+
+
       <div class="form-group">
-        <label for="title">Título</label>
-        <input id="title" type="text" placeholder="Ex.: Promoção de verão" required>
+
+        <label for="title">
+          Título
+        </label>
+
+        <input
+          id="title"
+          type="text"
+          placeholder="Ex.: Promoção de verão"
+          required
+        >
+
       </div>
+
+
 
       <div class="form-row">
+
+
         <div class="form-group">
-          <label for="category">Categoria</label>
+
+          <label for="category">
+            Categoria
+          </label>
+
           <select id="category" required>
-            <option value="">Escolher categoria</option>
-            <option>Desporto e Lazer</option>
-            <option>Viagens e Férias</option>
-            <option>Roupa e Acessórios</option>
-            <option>Perfumes e Cosmética</option>
-            <option>Tecnologia</option>
-            <option>Casa e Jardim</option>
-            <option>Saúde e Bem Estar</option>
-            <option>Marketplace</option>
-            <option>Alimentação</option>
+
+            <option value="">
+              Escolher categoria
+            </option>
+
+            <option>
+              Desporto e Lazer
+            </option>
+
+            <option>
+              Viagens e Férias
+            </option>
+
+            <option>
+              Roupa e Acessórios
+            </option>
+
+            <option>
+              Perfumes e Cosmética
+            </option>
+
+            <option>
+              Tecnologia
+            </option>
+
+            <option>
+              Casa e Jardim
+            </option>
+
+            <option>
+              Saúde e Bem Estar
+            </option>
+
+            <option>
+              Marketplace
+            </option>
+
+            <option>
+              Alimentação
+            </option>
+
           </select>
+
         </div>
+
+
+
         <div class="form-group">
-          <label for="date">Data</label>
-          <input id="date" type="date" required>
+
+          <label for="date">
+            Data
+          </label>
+
+          <input
+            id="date"
+            type="date"
+            required
+          >
+
         </div>
+
       </div>
+
+
 
       <div class="form-group">
-        <label for="link">Link da promoção</label>
-        <input id="link" type="url" placeholder="https://..." required>
+
+        <label for="link">
+          Link da promoção
+        </label>
+
+        <input
+          id="link"
+          type="url"
+          placeholder="https://..."
+          required
+        >
+
       </div>
+
+
 
       <div class="form-group">
-        <label for="image">Imagem</label>
-        <input id="image" type="file" accept="image/*" required>
-        <small>JPG, PNG ou WebP</small>
+
+        <label for="image">
+          Imagem
+        </label>
+
+        <input
+          id="image"
+          type="file"
+          accept="image/*"
+          required
+        >
+
+        <small>
+          JPG, PNG ou WebP
+        </small>
+
       </div>
 
-      <div id="preview" class="image-preview"></div>
+
+
+      <div
+        id="preview"
+        class="image-preview"
+      ></div>
+
+
 
       <div class="form-group">
-        <label for="password">Palavra-passe de administração</label>
-        <input id="password" type="password" autocomplete="current-password" required>
-        <small>A palavra-passe é enviada apenas por HTTPS para a API.</small>
+
+        <label for="password">
+          Palavra-passe de administração
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          required
+        >
+
+        <small>
+          A palavra-passe é enviada apenas por HTTPS para a API.
+        </small>
+
       </div>
 
-      <button type="submit" class="save-button">Adicionar promoção</button>
+
+
+      <button
+        type="submit"
+        class="save-button"
+      >
+        Adicionar promoção
+      </button>
+
+
     </form>
+
   </section>
+
+
+
+  <!-- =====================================
+       EDITAR PROMOÇÃO
+  ====================================== -->
+
+  <section
+    id="editSection"
+    class="admin-card"
+    hidden
+  >
+
+    <h2>Editar promoção</h2>
+
+
+    <form id="editForm">
+
+      <input
+        type="hidden"
+        id="editId"
+      >
+
+
+      <div class="form-group">
+
+        <label for="editTitle">
+          Título
+        </label>
+
+        <input
+          id="editTitle"
+          type="text"
+          required
+        >
+
+      </div>
+
+
+
+      <div class="form-row">
+
+
+        <div class="form-group">
+
+          <label for="editCategory">
+            Categoria
+          </label>
+
+          <select
+            id="editCategory"
+            required
+          >
+
+            <option value="">
+              Escolher categoria
+            </option>
+
+            <option>
+              Desporto e Lazer
+            </option>
+
+            <option>
+              Viagens e Férias
+            </option>
+
+            <option>
+              Roupa e Acessórios
+            </option>
+
+            <option>
+              Perfumes e Cosmética
+            </option>
+
+            <option>
+              Tecnologia
+            </option>
+
+            <option>
+              Casa e Jardim
+            </option>
+
+            <option>
+              Saúde e Bem Estar
+            </option>
+
+            <option>
+              Marketplace
+            </option>
+
+            <option>
+              Alimentação
+            </option>
+
+          </select>
+
+        </div>
+
+
+
+        <div class="form-group">
+
+          <label for="editDate">
+            Data
+          </label>
+
+          <input
+            id="editDate"
+            type="date"
+            required
+          >
+
+        </div>
+
+      </div>
+
+
+
+      <div class="form-group">
+
+        <label for="editLink">
+          Link da promoção
+        </label>
+
+        <input
+          id="editLink"
+          type="url"
+          required
+        >
+
+      </div>
+
+
+
+      <div class="form-group">
+
+        <label for="editImage">
+          Nova imagem
+        </label>
+
+        <input
+          id="editImage"
+          type="file"
+          accept="image/*"
+        >
+
+        <small>
+          Deixa vazio para manter a imagem atual.
+        </small>
+
+      </div>
+
+
+
+      <div
+        id="editPreview"
+        class="image-preview"
+      ></div>
+
+
+
+      <div class="form-group">
+
+        <label for="editPassword">
+          Palavra-passe de administração
+        </label>
+
+        <input
+          id="editPassword"
+          type="password"
+          autocomplete="current-password"
+          required
+        >
+
+      </div>
+
+
+
+      <div class="form-row">
+
+        <button
+          type="submit"
+          class="save-button"
+        >
+          Guardar alterações
+        </button>
+
+
+        <button
+          type="button"
+          id="cancelEdit"
+          class="danger-button"
+        >
+          Cancelar
+        </button>
+
+      </div>
+
+
+    </form>
+
+  </section>
+
+
+
+  <!-- =====================================
+       PROMOÇÕES EXISTENTES
+  ====================================== -->
 
   <section class="admin-card">
+
+
     <div class="list-header">
+
+
       <div>
-        <h2>Promoções existentes</h2>
-        <p id="offerCount">A carregar...</p>
+
+        <h2>
+          Promoções existentes
+        </h2>
+
+        <p id="offerCount">
+          A carregar...
+        </p>
+
       </div>
-      <button id="clearAll" class="danger-button">Apagar todas</button>
+
+
+      <button
+        id="clearAll"
+        class="danger-button"
+      >
+        Apagar todas
+      </button>
+
+
     </div>
-    <div id="status" role="status"></div>
-    <div id="offerList" class="offer-list"></div>
+
+
+    <div
+      id="status"
+      role="status"
+    ></div>
+
+
+    <div
+      id="offerList"
+      class="offer-list"
+    ></div>
+
+
   </section>
+
+
 </main>
 
+
 <script src="admin.js"></script>
+
 </body>
 </html>
