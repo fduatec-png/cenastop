@@ -191,45 +191,45 @@ function mostrarOfertas() {
         /* ---------- CARTÃO ---------- */
 
         card.innerHTML = `
+    <a
+        class="offer-link"
+        href="${escapeAttribute(oferta.link || "#")}"
+        target="_blank"
+        rel="nofollow sponsored noopener"
+    >
 
-            <a
-                class="offer-link"
-                href="${escapeAttribute(oferta.link || "#")}"
-                target="_blank"
-                rel="nofollow sponsored noopener"
-            >
+        <div class="offer-image">
 
-                <div class="offer-image">
+            ${imagem}
 
-                    ${imagem}
+            <div class="offer-overlay">
+                <span>Ver oferta →</span>
+            </div>
 
-                </div>
+        </div>
 
-            </a>
+        <div class="offer-info">
 
+            <div class="offer-category">
+                ${escapeHtml(oferta.categoria || "")}
+            </div>
 
-            <div class="offer-info">
-
-                <div class="offer-category">
-
-                    ${escapeHtml(
-                        oferta.categoria || ""
-                    )}
-
-                </div>
-
+            <div class="offer-bottom">
 
                 <h3 class="offer-title">
-
-                    ${escapeHtml(
-                        oferta.titulo || ""
-                    )}
-
+                    ${escapeHtml(oferta.titulo || "")}
                 </h3>
+
+                <span class="offer-arrow">
+                    →
+                </span>
 
             </div>
 
-        `;
+        </div>
+
+    </a>
+`;
 
 
         offersContainer.appendChild(card);
