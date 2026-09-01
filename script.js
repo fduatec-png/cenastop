@@ -196,6 +196,7 @@ function mostrarOfertas() {
         href="${escapeAttribute(oferta.link || "#")}"
         target="_blank"
         rel="nofollow sponsored noopener"
+        aria-label="Ver oferta: ${escapeAttribute(oferta.titulo || "Oferta")}"
     >
 
         <div class="offer-image">
@@ -203,32 +204,25 @@ function mostrarOfertas() {
             ${imagem}
 
             <div class="offer-overlay">
-                <span>Ver oferta →</span>
-            </div>
-
-        </div>
-
-        <div class="offer-info">
-
-            <div class="offer-category">
-                ${escapeHtml(oferta.categoria || "")}
-            </div>
-
-            <div class="offer-bottom">
-
-                <h3 class="offer-title">
-                    ${escapeHtml(oferta.titulo || "")}
-                </h3>
-
-                <span class="offer-arrow">
-                    →
-                </span>
-
+                <span>Ver oferta</span>
+                <strong>→</strong>
             </div>
 
         </div>
 
     </a>
+
+    <div class="offer-info">
+
+        <div class="offer-category">
+            ${escapeHtml(oferta.categoria || "")}
+        </div>
+
+        <h3 class="offer-title">
+            ${escapeHtml(oferta.titulo || "")}
+        </h3>
+
+    </div>
 `;
 
 
