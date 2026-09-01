@@ -1,35 +1,49 @@
-/* =====================================
-   CONFIGURAÇÃO
-===================================== */
+/* =====================================================
+   50PORCENTO — SITE PRINCIPAL
+   DESIGN MODERNO
+===================================================== */
 
 :root {
-
-    --black: #050505;
+    --black: #080808;
     --white: #ffffff;
 
-    --grey: #eeeeee;
-    --text: #222222;
+    --background: #f6f6f4;
+    --surface: #ffffff;
+
+    --border: #e5e5e2;
+
+    --text: #171717;
+    --muted: #777777;
 
     --accent: #ff5a36;
+    --accent-dark: #e94b29;
 
+    --radius: 12px;
+
+    --shadow:
+        0 4px 18px rgba(0, 0, 0, .06);
+
+    --shadow-hover:
+        0 14px 35px rgba(0, 0, 0, .12);
 }
 
+
+/* =====================================================
+   BASE
+===================================================== */
 
 * {
     box-sizing: border-box;
 }
 
-
 html {
     scroll-behavior: smooth;
 }
 
-
 body {
-
     margin: 0;
 
-    background: #ffffff;
+    background: var(--background);
 
     color: var(--text);
 
@@ -37,76 +51,78 @@ body {
         Arial,
         Helvetica,
         sans-serif;
+
+    -webkit-font-smoothing: antialiased;
 }
 
 
-/* =====================================
+/* =====================================================
    HEADER
-===================================== */
+===================================================== */
 
 .site-header {
-
     width: 100%;
 
-    background: #000000;
+    background: rgba(8, 8, 8, .97);
 
-    color: #ffffff;
+    color: var(--white);
 
     position: sticky;
 
     top: 0;
 
-    z-index: 100;
+    z-index: 1000;
 
+    box-shadow:
+        0 2px 12px rgba(0, 0, 0, .18);
 }
 
 
 .header-inner {
+    min-height: 64px;
 
-    height: 60px;
+    max-width: 1700px;
+
+    margin: 0 auto;
+
+    padding: 0 24px;
 
     display: flex;
 
     align-items: center;
 
-    gap: 25px;
-
-    padding: 0 10px;
-
+    gap: 28px;
 }
 
 
-/* =====================================
+/* =====================================================
    LOGO
-===================================== */
+===================================================== */
 
 .logo {
-
     flex-shrink: 0;
 
-    color: #ffffff;
+    color: var(--white);
 
-    font-size: 28px;
+    font-size: 26px;
 
     font-weight: 900;
 
     letter-spacing: -1.5px;
 
+    line-height: 1;
+}
+
+.logo span {
+    color: var(--white);
 }
 
 
-.logo span,
-.footer-inner span {
-    color: #ffffff;
-}
-
-
-/* =====================================
-   MENU
-===================================== */
+/* =====================================================
+   MENU PRINCIPAL
+===================================================== */
 
 .main-menu {
-
     flex: 1;
 
     display: flex;
@@ -115,71 +131,69 @@ body {
 
     justify-content: center;
 
-    gap: 18px;
+    gap: 20px;
 
     white-space: nowrap;
-
 }
 
 
 .main-menu a {
+    color: var(--white);
 
-    color: #ffffff;
+    font-size: 10px;
 
-    font-size: 9px;
-
-    font-weight: 500;
+    font-weight: 700;
 
     text-decoration: none;
 
-    transition: opacity .2s;
+    opacity: .88;
 
+    transition:
+        opacity .2s,
+        transform .2s;
 }
 
 
 .main-menu a:hover {
+    opacity: 1;
 
-    opacity: .65;
-
+    transform: translateY(-1px);
 }
 
 
-/* =====================================
-   PARTE DIREITA
-===================================== */
+/* =====================================================
+   DIREITA DO HEADER
+===================================================== */
 
 .header-right {
-
     display: flex;
 
     align-items: center;
 
-    gap: 8px;
+    gap: 10px;
 
     flex-shrink: 0;
-
 }
 
 
 .search-box {
+    width: 190px;
 
-    width: 175px;
+    height: 38px;
 
-    height: 36px;
+    background: var(--white);
 
-    background: #ffffff;
-
-    border-radius: 4px;
+    border-radius: 7px;
 
     display: flex;
 
     align-items: center;
 
+    overflow: hidden;
 }
 
 
 .search-box input {
-
     width: 100%;
 
     height: 100%;
@@ -188,111 +202,97 @@ body {
 
     outline: 0;
 
-    padding: 0 10px;
+    padding: 0 12px;
 
     font-size: 12px;
 
+    color: var(--text);
+
+    background: transparent;
+}
+
+
+.search-box input::placeholder {
+    color: #999999;
 }
 
 
 .search-box span {
+    width: 34px;
 
-    width: 28px;
+    display: flex;
 
-    color: #000000;
+    align-items: center;
 
-    font-size: 20px;
+    justify-content: center;
 
+    color: #111111;
+
+    font-size: 18px;
 }
 
 
 .login {
-
-    color: #ffffff;
+    color: var(--white);
 
     font-size: 9px;
 
-    font-weight: 700;
+    font-weight: 800;
 
+    text-decoration: none;
 }
 
 
-.language {
+.login:hover {
+    text-decoration: underline;
+}
 
-    width: 29px;
 
-    height: 30px;
+/* =====================================================
+   BOTÃO MOBILE
+===================================================== */
 
-    border: 1px solid #ffffff;
+.menu-button {
+    display: none;
 
     background: transparent;
 
-    color: #ffffff;
-
-    border-radius: 4px;
-
-    font-size: 10px;
-
-    cursor: pointer;
-
-}
-
-
-.language.active {
-
-    background: #ffffff;
-
-    color: #000000;
-
-}
-
-
-/* =====================================
-   MENU MOBILE
-===================================== */
-
-.menu-button {
-
-    display: none;
-
-    background: none;
-
     border: 0;
 
-    color: #ffffff;
+    color: var(--white);
 
-    font-size: 24px;
+    font-size: 25px;
 
     cursor: pointer;
 
+    padding: 4px;
 }
 
 
-/* =====================================
+/* =====================================================
    ESPAÇO SUPERIOR
-===================================== */
+===================================================== */
 
 .top-space {
-
-    height: 68px;
-
+    height: 54px;
 }
 
 
-/* =====================================
+/* =====================================================
    CATEGORIAS
-===================================== */
+===================================================== */
 
 .category-bar {
-
     width: 100%;
 
-    padding: 0 20px 22px;
-
+    padding: 0 24px 28px;
 }
 
 
 .category-scroll {
+    max-width: 1500px;
+
+    margin: 0 auto;
 
     display: flex;
 
@@ -300,122 +300,151 @@ body {
 
     flex-wrap: wrap;
 
-    gap: 7px;
-
+    gap: 8px;
 }
 
 
 .category {
+    border: 1px solid var(--border);
 
-    border: 1px solid #d9d9d9;
-
-    background: #ffffff;
+    background: var(--surface);
 
     color: #333333;
 
-    padding: 8px 13px;
+    padding: 10px 15px;
 
-    border-radius: 3px;
+    border-radius: 7px;
 
     font-size: 10px;
 
-    font-weight: 700;
+    font-weight: 800;
 
     cursor: pointer;
 
+    transition:
+        background .2s,
+        color .2s,
+        border-color .2s,
+        transform .2s,
+        box-shadow .2s;
 }
 
 
-.category:hover,
+.category:hover {
+    border-color: #bbbbbb;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, .06);
+}
+
+
 .category.active {
+    background: var(--black);
 
-    background: #000000;
+    color: var(--white);
 
-    color: #ffffff;
+    border-color: var(--black);
 
-    border-color: #000000;
-
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, .14);
 }
 
 
-/* =====================================
-   GRELHA DE OFERTAS
-===================================== */
+/* =====================================================
+   ÁREA DAS OFERTAS
+===================================================== */
 
 .offers-section {
-
     width: 100%;
 
     max-width: 1500px;
 
     margin: 0 auto;
 
-    padding: 0 20px 60px;
-
+    padding:
+        0 24px 80px;
 }
 
 
 .offers-grid {
-
     display: grid;
 
     grid-template-columns:
-        repeat(4, 1fr);
+        repeat(4, minmax(0, 1fr));
 
-    gap: 16px;
-
+    gap: 22px;
 }
 
 
-/* =====================================
+/* =====================================================
    CARTÃO
-===================================== */
+===================================================== */
 
 .offer-card {
+    min-width: 0;
 
-    background: #ffffff;
+    background: var(--surface);
 
-    border: 1px solid #dddddd;
+    border: 1px solid var(--border);
 
-    padding: 15px;
+    border-radius: var(--radius);
+
+    padding: 10px;
+
+    overflow: hidden;
+
+    box-shadow: var(--shadow);
 
     transition:
-        transform .2s,
-        box-shadow .2s;
-
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
 }
 
 
 .offer-card:hover {
+    transform: translateY(-5px);
 
-    transform: translateY(-3px);
+    border-color: #d5d5d2;
 
-    box-shadow:
-        0 8px 25px rgba(0,0,0,.10);
-
+    box-shadow: var(--shadow-hover);
 }
 
 
-/* =====================================
-   IMAGEM
-===================================== */
+/* =====================================================
+   LINK DA OFERTA
+===================================================== */
 
 .offer-link {
-
     display: block;
 
     width: 100%;
 
+    text-decoration: none;
+
+    color: inherit;
 }
 
 
-.offer-image {
+/* =====================================================
+   IMAGEM
+===================================================== */
 
+.offer-image {
     width: 100%;
 
     aspect-ratio: 1 / 1;
 
-    background: #eeeeee;
+    background:
+        linear-gradient(
+            135deg,
+            #f1f1f1,
+            #e9e9e9
+        );
+
+    border-radius: 8px;
 
     overflow: hidden;
 
@@ -424,12 +453,10 @@ body {
     align-items: center;
 
     justify-content: center;
-
 }
 
 
 .offer-image img {
-
     width: 100%;
 
     height: 100%;
@@ -438,99 +465,102 @@ body {
 
     display: block;
 
-    transition: transform .3s;
-
+    transition:
+        transform .35s ease;
 }
 
 
 .offer-card:hover .offer-image img {
-
-    transform: scale(1.02);
-
+    transform: scale(1.035);
 }
 
 
-/* =====================================
-   QUANDO NÃO HÁ IMAGEM
-===================================== */
+/* =====================================================
+   SEM IMAGEM
+===================================================== */
 
 .no-image {
-
     color: #999999;
 
     font-size: 13px;
 
+    text-align: center;
 }
 
 
-/* =====================================
-   TEXTO DISCRETO
-===================================== */
+/* =====================================================
+   INFORMAÇÃO DA OFERTA
+===================================================== */
 
 .offer-info {
-
-    padding-top: 10px;
-
+    padding:
+        12px 4px 5px;
 }
 
 
 .offer-category {
-
     font-size: 9px;
 
-    font-weight: 700;
+    font-weight: 800;
 
-    color: #888888;
+    color: var(--accent);
 
     text-transform: uppercase;
 
+    letter-spacing: .4px;
+
+    margin-bottom: 4px;
 }
 
 
 .offer-title {
+    margin: 0;
 
-    margin: 3px 0 0;
+    font-size: 14px;
 
-    font-size: 13px;
+    line-height: 1.3;
 
-    line-height: 1.25;
+    font-weight: 700;
 
+    color: var(--text);
 }
 
 
-/* =====================================
+/* =====================================================
    RESULTADO VAZIO
-===================================== */
+===================================================== */
 
 .empty {
-
     text-align: center;
 
-    padding: 60px 20px;
+    padding:
+        90px 20px;
 
-    color: #777777;
+    color: var(--muted);
 
+    font-size: 14px;
 }
 
 
-/* =====================================
+/* =====================================================
    FOOTER
-===================================== */
+===================================================== */
 
 footer {
+    background: var(--black);
 
-    background: #000000;
-
-    color: #ffffff;
-
+    color: var(--white);
 }
 
 
 .footer-inner {
+    min-height: 90px;
 
-    min-height: 75px;
+    max-width: 1700px;
 
-    padding: 20px;
+    margin: 0 auto;
+
+    padding: 20px 24px;
 
     display: flex;
 
@@ -538,97 +568,94 @@ footer {
 
     align-items: center;
 
-    gap: 20px;
+    gap: 25px;
 
     font-size: 10px;
+}
 
+
+.footer-inner span {
+    color: var(--white);
 }
 
 
 .footer-inner strong {
-
     font-size: 18px;
 
+    letter-spacing: -.5px;
 }
 
 
-/* =====================================
+/* =====================================================
    TABLET
-===================================== */
+===================================================== */
 
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
+
+    .header-inner {
+        gap: 18px;
+
+        padding:
+            0 18px;
+    }
+
 
     .main-menu {
-
-        gap: 10px;
-
+        gap: 12px;
     }
 
 
     .main-menu a {
-
         font-size: 8px;
-
     }
 
 
     .search-box {
-
-        width: 130px;
-
+        width: 145px;
     }
 
 
     .offers-grid {
-
         grid-template-columns:
-            repeat(3, 1fr);
+            repeat(3, minmax(0, 1fr));
 
+        gap: 18px;
     }
 
 }
 
 
-/* =====================================
+/* =====================================================
    TABLET PEQUENO
-===================================== */
+===================================================== */
 
-@media (max-width: 850px) {
+@media (max-width: 900px) {
 
     .header-inner {
-
-        height: 60px;
-
+        min-height: 60px;
     }
 
 
     .menu-button {
-
         display: block;
 
         order: 2;
-
     }
 
 
     .logo {
-
         order: 1;
-
     }
 
 
     .header-right {
-
         order: 3;
 
         margin-left: auto;
-
     }
 
 
     .main-menu {
-
         display: none;
 
         position: absolute;
@@ -639,105 +666,82 @@ footer {
 
         right: 0;
 
-        background: #000000;
+        background: #080808;
 
-        padding: 20px;
+        padding:
+            20px 22px 24px;
 
         flex-direction: column;
 
         align-items: flex-start;
 
-        gap: 18px;
+        justify-content: flex-start;
 
-        border-top: 1px solid #222222;
+        gap: 17px;
 
+        border-top:
+            1px solid #222222;
+
+        box-shadow:
+            0 12px 25px rgba(0, 0, 0, .2);
     }
 
 
     .main-menu.open {
-
         display: flex;
-
     }
 
 
     .main-menu a {
-
         font-size: 12px;
-
     }
 
 
     .offers-grid {
-
         grid-template-columns:
-            repeat(2, 1fr);
-
+            repeat(2, minmax(0, 1fr));
     }
 
 
     .top-space {
-
         height: 35px;
-
     }
 
 }
 
 
-/* =====================================
+/* =====================================================
    MOBILE
-===================================== */
+===================================================== */
 
 @media (max-width: 600px) {
 
     .header-inner {
+        padding:
+            0 14px;
 
-        padding: 0 12px;
-
+        gap: 12px;
     }
 
 
     .logo {
-
-        font-size: 24px;
-
+        font-size: 23px;
     }
 
 
-    .search-box {
-
-        display: none;
-
-    }
-
-
+    .search-box,
     .login {
-
         display: none;
-
-    }
-
-
-    .language {
-
-        width: 28px;
-
-        height: 28px;
-
     }
 
 
     .category-bar {
-
         padding:
-            10px 12px 18px;
-
+            10px 12px 20px;
     }
 
 
     .category-scroll {
-
         justify-content: flex-start;
 
         flex-wrap: nowrap;
@@ -746,71 +750,100 @@ footer {
 
         scrollbar-width: none;
 
-        padding-bottom: 5px;
-
+        padding:
+            2px 2px 7px;
     }
 
 
     .category-scroll::-webkit-scrollbar {
-
         display: none;
-
     }
 
 
     .category {
-
         flex-shrink: 0;
 
-        font-size: 10px;
+        padding:
+            9px 13px;
 
+        font-size: 9px;
     }
 
 
     .offers-section {
-
         padding:
-            0 10px 40px;
-
+            0 12px 45px;
     }
 
 
     .offers-grid {
-
         grid-template-columns: 1fr;
 
-        gap: 14px;
-
+        gap: 16px;
     }
 
 
     .offer-card {
+        padding: 9px;
 
-        padding: 10px;
-
+        border-radius: 11px;
     }
 
 
     .offer-image {
-
         aspect-ratio: 4 / 3;
 
+        border-radius: 8px;
     }
 
 
     .offer-info {
+        display: block;
 
-        display: none;
+        padding:
+            10px 3px 5px;
+    }
 
+
+    .offer-title {
+        font-size: 14px;
     }
 
 
     .footer-inner {
+        min-height: 110px;
 
         flex-direction: column;
 
         align-items: flex-start;
 
+        justify-content: center;
+
+        padding:
+            22px 15px;
+
+        gap: 8px;
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE MUITO PEQUENO
+===================================================== */
+
+@media (max-width: 380px) {
+
+    .logo {
+        font-size: 21px;
+    }
+
+
+    .category {
+        font-size: 8px;
+
+        padding:
+            8px 11px;
     }
 
 }
