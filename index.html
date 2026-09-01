@@ -3,12 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
 
     <meta name="description"
-          content="50Porcento - as melhores oportunidades, promoções e descontos.">
+          content="50PORCENTO — promoções, descontos e oportunidades em Portugal.">
 
-    <title>50Porcento - Promoções e Oportunidades</title>
+    <title>50PORCENTO — Promoções e Oportunidades</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -26,13 +28,15 @@
         <button
             class="menu-button"
             id="menuButton"
-            aria-label="Abrir menu">
+            aria-label="Abrir menu"
+            aria-expanded="false">
             ☰
         </button>
 
         <nav class="main-menu" id="mainMenu">
 
             <a href="#ofertas">OFERTAS</a>
+
             <a href="#categorias">CATEGORIAS</a>
 
             <a href="#" data-category="Desporto e Lazer">
@@ -73,7 +77,6 @@
 
         </nav>
 
-
         <div class="header-right">
 
             <div class="search-box">
@@ -81,23 +84,16 @@
                 <input
                     id="search"
                     type="search"
-                    placeholder="Pesquisar">
+                    placeholder="Pesquisar ofertas..."
+                    autocomplete="off">
 
                 <span>⌕</span>
 
             </div>
 
-            <a href="#" class="login">
+            <a href="admin.html" class="login">
                 LOGIN
             </a>
-
-            <button class="language active">
-                PT
-            </button>
-
-            <button class="language">
-                EN
-            </button>
 
         </div>
 
@@ -108,50 +104,129 @@
 
 <main>
 
-    <section class="top-space"></section>
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-inner">
+
+            <div class="hero-content">
+
+                <span class="hero-label">
+                    PROMOÇÕES & DESCONTOS
+                </span>
+
+                <h1>
+                    As melhores oportunidades,
+                    <strong>num só lugar.</strong>
+                </h1>
+
+                <p>
+                    Descobre promoções, descontos e oportunidades
+                    selecionadas para ti.
+                </p>
+
+                <a href="#ofertas" class="hero-button">
+                    Ver ofertas
+                    <span>↓</span>
+                </a>
+
+            </div>
+
+            <div class="hero-mark">
+                <span>50</span>
+                <small>%</small>
+            </div>
+
+        </div>
+
+    </section>
 
 
-    <section id="categorias" class="category-bar">
+    <!-- CATEGORIAS -->
+
+    <section id="categorias" class="category-section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="eyebrow">
+                    EXPLORAR
+                </span>
+
+                <h2>
+                    Categorias
+                </h2>
+
+            </div>
+
+            <p>
+                Encontra rapidamente o que procuras.
+            </p>
+
+        </div>
+
 
         <div class="category-scroll">
 
-            <button class="category active" data-category="Todas">
+            <button
+                class="category active"
+                data-category="Todas">
                 TODAS
             </button>
 
-            <button class="category" data-category="Desporto e Lazer">
+            <button
+                class="category"
+                data-category="Desporto e Lazer">
                 DESPORTO E LAZER
             </button>
 
-            <button class="category" data-category="Viagens e Férias">
+            <button
+                class="category"
+                data-category="Viagens e Férias">
                 VIAGENS E FÉRIAS
             </button>
 
-            <button class="category" data-category="Roupa e Acessórios">
+            <button
+                class="category"
+                data-category="Roupa e Acessórios">
                 ROUPA E ACESSÓRIOS
             </button>
 
-            <button class="category" data-category="Perfumes e Cosmética">
+            <button
+                class="category"
+                data-category="Perfumes e Cosmética">
                 PERFUMES E COSMÉTICA
             </button>
 
-            <button class="category" data-category="Tecnologia">
+            <button
+                class="category"
+                data-category="Tecnologia">
                 TECNOLOGIA
             </button>
 
-            <button class="category" data-category="Casa e Jardim">
+            <button
+                class="category"
+                data-category="Casa e Jardim">
                 CASA E JARDIM
             </button>
 
-            <button class="category" data-category="Saúde e Bem Estar">
+            <button
+                class="category"
+                data-category="Saúde e Bem Estar">
                 SAÚDE E BEM ESTAR
             </button>
 
-            <button class="category" data-category="Marketplace">
+            <button
+                class="category"
+                data-category="Marketplace">
                 MARKETPLACE
             </button>
 
-            <button class="category" data-category="Alimentação">
+            <button
+                class="category"
+                data-category="Alimentação">
                 ALIMENTAÇÃO
             </button>
 
@@ -160,12 +235,46 @@
     </section>
 
 
-    <section id="ofertas" class="offers-section">
+    <!-- OFERTAS -->
 
-        <div class="offers-grid" id="offers"></div>
+    <section
+        id="ofertas"
+        class="offers-section">
 
-        <p id="empty" class="empty" hidden>
-            Não encontrámos ofertas.
+        <div class="offers-header">
+
+            <div>
+
+                <span class="eyebrow">
+                    EM DESTAQUE
+                </span>
+
+                <h2>
+                    Últimas ofertas
+                </h2>
+
+            </div>
+
+            <span class="offers-note">
+                Atualizado regularmente
+            </span>
+
+        </div>
+
+
+        <div
+            class="offers-grid"
+            id="offers">
+        </div>
+
+
+        <p
+            id="empty"
+            class="empty"
+            hidden>
+
+            Não encontrámos ofertas para a tua pesquisa.
+
         </p>
 
     </section>
@@ -177,24 +286,54 @@
 
     <div class="footer-inner">
 
-        <strong>50<span>PORCENTO</span></strong>
+        <div class="footer-brand">
 
-        <span>
-            © 2026 50Porcento
-        </span>
+            <strong>
+                50<span>PORCENTO</span>
+            </strong>
 
-        <span>
-            Links de afiliados podem gerar uma comissão.
-        </span>
+            <p>
+                Promoções que valem a pena.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="#ofertas">
+                Ofertas
+            </a>
+
+            <a href="#categorias">
+                Categorias
+            </a>
+
+            <a href="admin.html">
+                Administração
+            </a>
+
+        </div>
+
+
+        <div class="footer-copy">
+
+            <span>
+                © 2026 50PORCENTO
+            </span>
+
+            <small>
+                Links de afiliados podem gerar uma comissão.
+            </small>
+
+        </div>
 
     </div>
 
 </footer>
 
 
-
-<script src="script.js?v=2"></script>
+<script src="script.js"></script>
 
 </body>
-
 </html>
