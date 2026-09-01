@@ -1,60 +1,94 @@
-const offersContainer =
-    document.querySelector("#offers");
+/* =====================================
+   ELEMENTOS
+===================================== */
 
-const searchInput =
-    document.querySelector("#search");
+const offersContainer = document.querySelector("#offers");
+const searchInput = document.querySelector("#search");
+const emptyMessage = document.querySelector("#empty");
+const categoryButtons = document.querySelectorAll(".category");
+const menuButton = document.querySelector("#menuButton");
+const mainMenu = document.querySelector("#mainMenu");
 
-const emptyMessage =
-    document.querySelector("#empty");
-
-const categoryButtons =
-    document.querySelectorAll(".category");
-
-const menuButton =
-    document.querySelector("#menuButton");
-
-const mainMenu =
-    document.querySelector("#mainMenu");
-
-
-let categoriaAtual = "Todas";
-
-let ofertas = [];
 
 /* =====================================
-   CARREGAR OFERTAS DA BASE DE DADOS
+   DADOS
+===================================== */
+
+let ofertas = [];
+let categoriaAtual = "Todas";
+
+
+/* =====================================
+   CARREGAR OFERTAS DA API
 ===================================== */
 
 async function carregarOfertas() {
+
     try {
+
         const response = await fetch("/api/ofertas");
 
         if (!response.ok) {
-            throw new Error("Erro ao carregar ofertas");
+            throw new Error(
+                `Erro ao carregar ofertas: ${response.status}`
+            );
         }
 
         const data = await response.json();
 
-        ofertas = data.ofertas || [];
+        /*
+         * A API devolve:
+         *
+         * {
+         *   ofertas: [...]
+         * }
+         *
+         * Por isso temos de usar data.ofertas.
+         */
+
+        ofertas = Array.isArray(data.ofertas)
+            ? data.ofertas
+            : [];
+
+
+        console.log("Ofertas carregadas:", ofertas);
+
 
         mostrarOfertas();
 
+
     } catch (erro) {
-        console.error("Erro ao carregar ofertas:", erro);
+
+        console.error(
+            "Erro ao carregar ofertas:",
+            erro
+        );
 
         ofertas = [];
 
-        mostrarOfertas();
+        if (offersContainer) {
+            offersContainer.innerHTML = `
+                <p>
+                    Não foi possível carregar as promoções.
+                </p>
+            `;
+        }
+
     }
+
 }
+
 
 /* =====================================
    MOSTRAR OFERTAS
 ===================================== */
 
-
-
 function mostrarOfertas() {
+
+    if (!offersContainer) {
+        return;
+    }
+
 
     const pesquisa =
         searchInput
@@ -63,6 +97,11 @@ function mostrarOfertas() {
                 .toLowerCase()
             : "";
 
+
+    /*
+     * Agora "ofertas" é sempre um ARRAY,
+     * portanto .filter() funciona.
+     */
 
     const filtradas = ofertas.filter(
         oferta => {
@@ -73,8 +112,8 @@ function mostrarOfertas() {
 
 
             const texto =
-                `${oferta.titulo}
-                 ${oferta.categoria}`
+                `${oferta.titulo || ""}
+                 ${oferta.categoria || ""}`
                 .toLowerCase();
 
 
@@ -82,8 +121,7 @@ function mostrarOfertas() {
                 texto.includes(pesquisa);
 
 
-            return categoriaOK &&
-                   pesquisaOK;
+            return categoriaOK && pesquisaOK;
 
         }
     );
@@ -92,14 +130,39 @@ function mostrarOfertas() {
     offersContainer.innerHTML = "";
 
 
+    /* =====================================
+       NENHUMA OFERTA
+    ===================================== */
+
+    if (!filtradas.length) {
+
+        if (emptyMessage) {
+            emptyMessage.hidden = false;
+        }
+
+        return;
+
+    }
+
+
+    if (emptyMessage) {
+        emptyMessage.hidden = true;
+    }
+
+
+    /* =====================================
+       CRIAR CARTÕES
+    ===================================== */
+
     filtradas.forEach(oferta => {
 
         const card =
             document.createElement("article");
 
-        card.className =
-            "offer-card";
+        card.className = "offer-card";
 
+
+        /* ---------- IMAGEM ---------- */
 
         let imagem;
 
@@ -109,7 +172,7 @@ function mostrarOfertas() {
             imagem = `
                 <img
                     src="${oferta.imagem}"
-                    alt="${oferta.titulo}"
+                    alt="${escapeHtml(oferta.titulo || "Oferta")}"
                     loading="lazy"
                 >
             `;
@@ -125,11 +188,13 @@ function mostrarOfertas() {
         }
 
 
+        /* ---------- CARTÃO ---------- */
+
         card.innerHTML = `
 
             <a
                 class="offer-link"
-                href="${oferta.link}"
+                href="${escapeAttribute(oferta.link || "#")}"
                 target="_blank"
                 rel="nofollow sponsored noopener"
             >
@@ -147,13 +212,18 @@ function mostrarOfertas() {
 
                 <div class="offer-category">
 
-                    ${oferta.categoria}
+                    ${escapeHtml(
+                        oferta.categoria || ""
+                    )}
 
                 </div>
 
+
                 <h3 class="offer-title">
 
-                    ${oferta.titulo}
+                    ${escapeHtml(
+                        oferta.titulo || ""
+                    )}
 
                 </h3>
 
@@ -165,10 +235,6 @@ function mostrarOfertas() {
         offersContainer.appendChild(card);
 
     });
-
-
-    emptyMessage.hidden =
-        filtradas.length !== 0;
 
 }
 
@@ -229,16 +295,20 @@ if (searchInput) {
    MENU MOBILE
 ===================================== */
 
-menuButton.addEventListener(
-    "click",
-    () => {
+if (menuButton && mainMenu) {
 
-        mainMenu.classList.toggle(
-            "open"
-        );
+    menuButton.addEventListener(
+        "click",
+        () => {
 
-    }
-);
+            mainMenu.classList.toggle(
+                "open"
+            );
+
+        }
+    );
+
+}
 
 
 /* =====================================
@@ -278,16 +348,28 @@ document
                 mostrarOfertas();
 
 
-                mainMenu.classList.remove(
-                    "open"
-                );
+                if (mainMenu) {
+
+                    mainMenu.classList.remove(
+                        "open"
+                    );
+
+                }
 
 
-                document
-                    .querySelector("#ofertas")
-                    .scrollIntoView({
+                const ofertasSection =
+                    document.querySelector(
+                        "#ofertas"
+                    );
+
+
+                if (ofertasSection) {
+
+                    ofertasSection.scrollIntoView({
                         behavior: "smooth"
                     });
+
+                }
 
             }
         );
@@ -296,7 +378,51 @@ document
 
 
 /* =====================================
-   INICIAR
+   PROTEÇÃO HTML
 ===================================== */
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(
+            /[&<>"']/g,
+            char => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+            }[char])
+        );
+
+}
+
+
+function escapeAttribute(value) {
+
+    return String(value ?? "")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+}
+
+
+/* =====================================
+   INICIAR SITE
+===================================== */
+
+/*
+ * IMPORTANTE:
+ *
+ * Não fazemos:
+ *
+ *     mostrarOfertas();
+ *
+ * antes de carregar os dados.
+ *
+ * Primeiro vamos buscar as promoções
+ * à D1 através de /api/ofertas.
+ */
 
 carregarOfertas();
