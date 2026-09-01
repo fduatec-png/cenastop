@@ -690,7 +690,7 @@ function iniciarEdicao(promocao) {
   status(
     "A editar promoção. Faça as alterações e grave."
   );
-
+mostrarBotaoCancelar();
 
   window.scrollTo({
     top: 0,
