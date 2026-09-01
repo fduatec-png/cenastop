@@ -21,23 +21,25 @@ let categoriaAtual = "Todas";
 
 let ofertas = [];
 
+/* =====================================
+   CARREGAR OFERTAS DA BASE DE DADOS
+===================================== */
 
 async function carregarOfertas() {
     try {
-        const resposta = await fetch("/api/ofertas");
+        const response = await fetch("/api/ofertas");
 
-        if (!resposta.ok) {
-            throw new Error("Erro ao carregar promoções");
+        if (!response.ok) {
+            throw new Error("Erro ao carregar ofertas");
         }
 
-        const dados = await resposta.json();
+        const data = await response.json();
 
-        ofertas = dados.ofertas || [];
+        ofertas = data.ofertas || [];
 
         mostrarOfertas();
 
     } catch (erro) {
-
         console.error("Erro ao carregar ofertas:", erro);
 
         ofertas = [];
@@ -45,7 +47,6 @@ async function carregarOfertas() {
         mostrarOfertas();
     }
 }
-
 
 /* =====================================
    MOSTRAR OFERTAS
