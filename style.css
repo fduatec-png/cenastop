@@ -1460,3 +1460,95 @@ footer {
     }
 
 }
+/* =========================================
+   MELHORIA DOS CARTÕES
+========================================= */
+
+.offer-image {
+    position: relative;
+}
+
+.offer-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: flex;
+    justify-content: center;
+
+    padding: 18px;
+
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, .55),
+        transparent
+    );
+
+    opacity: 0;
+    transform: translateY(8px);
+
+    transition:
+        opacity .25s ease,
+        transform .25s ease;
+}
+
+.offer-overlay span {
+    background: #000000;
+    color: #ffffff;
+
+    padding: 9px 15px;
+
+    border-radius: 5px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.offer-card:hover .offer-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.offer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.offer-arrow {
+    flex-shrink: 0;
+
+    color: #999999;
+
+    font-size: 18px;
+
+    transition:
+        color .2s ease,
+        transform .2s ease;
+}
+
+.offer-card:hover .offer-arrow {
+    color: #000000;
+    transform: translateX(4px);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .offer-overlay {
+        display: none;
+    }
+
+    .offer-bottom {
+        gap: 8px;
+    }
+
+    .offer-arrow {
+        font-size: 16px;
+    }
+
+}
