@@ -51,10 +51,10 @@ async function carregarOfertas() {
             : [];
 
 
-        console.log("Ofertas carregadas:", ofertas);
+  console.log("Ofertas carregadas:", ofertas);
 
-
-        mostrarOfertas();
+mostrarOfertaDoDia();
+mostrarOfertas();;
 
 
     } catch (erro) {
@@ -78,7 +78,84 @@ async function carregarOfertas() {
 
 }
 
+/* =====================================
+   OFERTA DO DIA
+===================================== */
 
+function mostrarOfertaDoDia() {
+
+    const dailySection = document.querySelector("#oferta-do-dia");
+    const dailyTitle = document.querySelector("#dailyOfferTitle");
+    const dailyCategory = document.querySelector("#dailyOfferCategory");
+    const dailyImage = document.querySelector("#dailyOfferImage");
+    const dailyOfferLink = document.querySelector("#dailyOfferLink");
+    const dailyImageLink = document.querySelector("#dailyOfferImageLink");
+
+    if (
+        !dailySection ||
+        !dailyTitle ||
+        !dailyCategory ||
+        !dailyImage ||
+        !dailyOfferLink ||
+        !dailyImageLink
+    ) {
+        return;
+    }
+
+    /* Data de hoje no formato YYYY-MM-DD */
+    const hoje = new Date();
+
+    const ano = hoje.getFullYear();
+    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
+    const dia = String(hoje.getDate()).padStart(2, "0");
+
+    const dataHoje = `${ano}-${mes}-${dia}`;
+
+    /* Procurar promoções de hoje */
+    const ofertasHoje = ofertas.filter(
+        oferta => oferta.data === dataHoje
+    );
+
+    /* Se não houver, esconder a secção */
+    if (!ofertasHoje.length) {
+        dailySection.hidden = true;
+        return;
+    }
+
+    /* Primeira promoção do dia */
+    const oferta = ofertasHoje[0];
+
+    dailySection.hidden = false;
+
+    dailyTitle.textContent =
+        oferta.titulo || "Oferta do dia";
+
+    dailyCategory.textContent =
+        oferta.categoria || "";
+
+    const link =
+        oferta.link || "#";
+
+    dailyOfferLink.href = link;
+    dailyImageLink.href = link;
+
+    if (oferta.imagem) {
+
+        dailyImage.src = oferta.imagem;
+
+        dailyImage.alt =
+            oferta.titulo || "Oferta do dia";
+
+        dailyImage.style.display = "block";
+
+    } else {
+
+        dailyImage.removeAttribute("src");
+        dailyImage.style.display = "none";
+
+    }
+
+}
 /* =====================================
    MOSTRAR OFERTAS
 ===================================== */
