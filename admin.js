@@ -8,12 +8,13 @@ const dateInput = document.querySelector("#date");
 const passwordInput = document.querySelector("#password");
 const statusBox = document.querySelector("#status");
 
-let modoEdicao = false;
-let idEdicao = null;
-let imagemAtual = "";
+let editarId = null;
 
 const hoje = new Date().toISOString().split("T")[0];
-dateInput.value = hoje;
+
+if (dateInput) {
+  dateInput.value = hoje;
+}
 
 
 /* =====================================
@@ -21,35 +22,43 @@ dateInput.value = hoje;
 ===================================== */
 
 function status(message, error = false) {
+  if (!statusBox) return;
+
   statusBox.textContent = message;
   statusBox.style.color = error ? "#b00020" : "";
 }
 
 
 /* =====================================
-   PRÉ-VISUALIZAÇÃO DA IMAGEM
+   PREVISUALIZAÇÃO DA IMAGEM
 ===================================== */
 
-imageInput.addEventListener("change", function () {
-  const file = this.files[0];
+if (imageInput) {
+  imageInput.addEventListener("change", function () {
 
-  preview.innerHTML = "";
+    const file = this.files[0];
 
-  if (!file) return;
+    preview.innerHTML = "";
 
-  const reader = new FileReader();
+    if (!file) return;
 
-  reader.onload = event => {
-    preview.innerHTML = `
-      <img
-        src="${event.target.result}"
-        alt="Pré-visualização"
-      >
-    `;
-  };
+    const reader = new FileReader();
 
-  reader.readAsDataURL(file);
-});
+    reader.onload = event => {
+
+      preview.innerHTML = `
+        <img
+          src="${event.target.result}"
+          alt="Pré-visualização"
+        >
+      `;
+
+    };
+
+    reader.readAsDataURL(file);
+
+  });
+}
 
 
 /* =====================================
@@ -57,6 +66,7 @@ imageInput.addEventListener("change", function () {
 ===================================== */
 
 async function api(path, options = {}) {
+
   const password = passwordInput.value;
 
   const headers = new Headers(
@@ -92,13 +102,16 @@ async function api(path, options = {}) {
       .catch(() => ({}));
 
   if (!response.ok) {
+
     throw new Error(
       data.error ||
       `Erro ${response.status}`
     );
+
   }
 
   return data;
+
 }
 
 
@@ -110,19 +123,35 @@ async function carregarPromocoes() {
 
   try {
 
-    const response = await fetch(
-      `/api/ofertas?t=${Date.now()}`,
-      {
-        cache: "no-store"
-      }
-    );
+    status("A carregar promoções...");
+
+    const response =
+      await fetch(
+        "/api/ofertas",
+        {
+          cache: "no-store"
+        }
+      );
+
+    if (!response.ok) {
+
+      throw new Error(
+        `Erro ${response.status}`
+      );
+
+    }
 
     const data =
       await response.json();
 
-    mostrarPromocoes(
-      data.ofertas || []
-    );
+    const promocoes =
+      Array.isArray(data.ofertas)
+        ? data.ofertas
+        : [];
+
+    mostrarPromocoes(promocoes);
+
+    status("");
 
   } catch (e) {
 
@@ -139,7 +168,7 @@ async function carregarPromocoes() {
 
 
 /* =====================================
-   SUBMETER FORMULÁRIO
+   ADICIONAR / EDITAR
 ===================================== */
 
 form.addEventListener(
@@ -173,67 +202,73 @@ form.addEventListener(
 
 
     if (!title) {
+
       status(
-        "Introduza o título.",
+        "Introduza um título.",
         true
       );
+
       return;
+
     }
 
 
     if (!category) {
+
       status(
         "Escolha uma categoria.",
         true
       );
+
       return;
+
     }
 
 
     if (!link) {
+
       status(
-        "Introduza o link.",
+        "Introduza o link da promoção.",
         true
       );
+
       return;
+
     }
 
 
     if (!date) {
+
       status(
         "Escolha uma data.",
         true
       );
-      return;
-    }
 
-
-    if (!modoEdicao && !file) {
-      status(
-        "Escolha uma imagem.",
-        true
-      );
       return;
+
     }
 
 
     if (!passwordInput.value) {
+
       status(
         "Introduza a palavra-passe de administração.",
         true
       );
+
       return;
+
     }
 
 
     try {
 
-      let imagem = imagemAtual;
+      let imagem = "";
 
 
       /*
-       * Se foi escolhida uma nova imagem,
-       * comprimi-la.
+       * Se estamos a editar e não foi escolhida
+       * uma nova imagem, mantemos a imagem antiga.
        */
 
       if (file) {
@@ -248,11 +283,65 @@ form.addEventListener(
       }
 
 
-      /*
-       * ADICIONAR
-       */
+      /* =================================
+         EDITAR
+      ================================= */
 
-      if (!modoEdicao) {
+      if (editarId) {
+
+        status(
+          "A atualizar promoção..."
+        );
+
+        await api(
+          `/api/ofertas?id=${encodeURIComponent(editarId)}`,
+          {
+            method: "PUT",
+            body: JSON.stringify({
+              titulo: title,
+              categoria: category,
+              link,
+              data: date,
+              imagem
+            })
+          }
+        );
+
+        status(
+          "Promoção atualizada com sucesso."
+        );
+
+      }
+
+
+      /* =================================
+         NOVA PROMOÇÃO
+      ================================= */
+
+      else {
+
+        if (!file) {
+
+          status(
+            "Escolha uma imagem.",
+            true
+          );
+
+          return;
+
+        }
+
+        if (!imagem) {
+
+          status(
+            "Não foi possível preparar a imagem.",
+            true
+          );
+
+          return;
+
+        }
+
 
         status(
           "A guardar promoção..."
@@ -262,7 +351,6 @@ form.addEventListener(
           "/api/ofertas",
           {
             method: "POST",
-
             body: JSON.stringify({
               titulo: title,
               categoria: category,
@@ -272,7 +360,6 @@ form.addEventListener(
             })
           }
         );
-
 
         status(
           "Promoção adicionada com sucesso."
@@ -280,43 +367,6 @@ form.addEventListener(
 
       }
 
-
-      /*
-       * EDITAR
-       */
-
-      else {
-
-        status(
-          "A atualizar promoção..."
-        );
-
-        await api(
-          `/api/ofertas?id=${encodeURIComponent(idEdicao)}`,
-          {
-            method: "PUT",
-
-            body: JSON.stringify({
-              titulo: title,
-              categoria: category,
-              link,
-              data: date,
-              imagem
-            })
-          }
-        );
-
-
-        status(
-          "Promoção atualizada com sucesso."
-        );
-
-      }
-
-
-      /*
-       * Limpar formulário
-       */
 
       cancelarEdicao();
 
@@ -470,16 +520,14 @@ function mostrarPromocoes(promocoes) {
           "div"
         );
 
-
       item.className =
         "offer-item";
 
 
       item.innerHTML = `
+
         <img
-          src="${escapeAttribute(
-            promocao.imagem || ""
-          )}"
+          src="${promocao.imagem || ""}"
           alt=""
         >
 
@@ -506,80 +554,62 @@ function mostrarPromocoes(promocoes) {
         <div class="offer-actions">
 
           <button
+            type="button"
             class="edit-button"
-            data-id="${escapeAttribute(
-              promocao.id
-            )}"
+            data-id="${promocao.id}"
           >
             Editar
           </button>
 
           <button
+            type="button"
             class="delete-button"
-            data-id="${escapeAttribute(
-              promocao.id
-            )}"
+            data-id="${promocao.id}"
           >
             Apagar
           </button>
 
         </div>
+
       `;
 
 
-      offerList.appendChild(
-        item
-      );
-
-    }
-  );
+      offerList.appendChild(item);
 
 
-  /*
-   * BOTÕES EDITAR
-   */
+      /* ================================
+         EDITAR
+      ================================= */
 
-  offerList
-    .querySelectorAll(
-      ".edit-button"
-    )
-    .forEach(button => {
+      const editButton =
+        item.querySelector(
+          ".edit-button"
+        );
 
-      button.addEventListener(
+
+      editButton.addEventListener(
         "click",
         () => {
 
-          const promocao =
-            promocoes.find(
-              item =>
-                String(item.id) ===
-                String(button.dataset.id)
-            );
-
-
-          if (promocao) {
-            iniciarEdicao(
-              promocao
-            );
-          }
+          iniciarEdicao(
+            promocao
+          );
 
         }
       );
 
-    });
+
+      /* ================================
+         APAGAR
+      ================================= */
+
+      const deleteButton =
+        item.querySelector(
+          ".delete-button"
+        );
 
 
-  /*
-   * BOTÕES APAGAR
-   */
-
-  offerList
-    .querySelectorAll(
-      ".delete-button"
-    )
-    .forEach(button => {
-
-      button.addEventListener(
+      deleteButton.addEventListener(
         "click",
         async () => {
 
@@ -596,7 +626,7 @@ function mostrarPromocoes(promocoes) {
 
             await api(
               `/api/ofertas?id=${encodeURIComponent(
-                button.dataset.id
+                deleteButton.dataset.id
               )}`,
               {
                 method: "DELETE"
@@ -605,7 +635,6 @@ function mostrarPromocoes(promocoes) {
 
 
             await carregarPromocoes();
-
 
             status(
               "Promoção apagada."
@@ -624,7 +653,8 @@ function mostrarPromocoes(promocoes) {
         }
       );
 
-    });
+    }
+  );
 
 }
 
@@ -635,13 +665,8 @@ function mostrarPromocoes(promocoes) {
 
 function iniciarEdicao(promocao) {
 
-  modoEdicao = true;
-
-  idEdicao =
+  editarId =
     promocao.id;
-
-  imagemAtual =
-    promocao.imagem || "";
 
 
   document
@@ -666,35 +691,120 @@ function iniciarEdicao(promocao) {
     promocao.data || "";
 
 
-  imageInput.value = "";
+  /*
+   * Durante edição a imagem deixa de ser obrigatória.
+   */
+
+  imageInput.required = false;
 
 
-  if (imagemAtual) {
+  /*
+   * Mostrar imagem atual.
+   */
+
+  preview.innerHTML = "";
+
+  if (promocao.imagem) {
 
     preview.innerHTML = `
-      <p>Imagem atual:</p>
+
+      <div style="margin-bottom:10px;">
+        <small>Imagem atual:</small>
+      </div>
 
       <img
-        src="${imagemAtual}"
+        src="${promocao.imagem}"
         alt="Imagem atual"
+        style="max-width:300px;"
       >
+
+      <p>
+        <small>
+          Escolha uma nova imagem apenas
+          se quiser substituí-la.
+        </small>
+      </p>
+
     `;
-
-  } else {
-
-    preview.innerHTML = "";
 
   }
 
 
-  status(
-    "A editar promoção. Faça as alterações e grave."
-  );
-mostrarBotaoCancelar();
+  /*
+   * Alterar botão.
+   */
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
+  const saveButton =
+    form.querySelector(
+      ".save-button"
+    );
+
+
+  if (saveButton) {
+
+    saveButton.textContent =
+      "Guardar alterações";
+
+  }
+
+
+  /*
+   * Criar botão cancelar.
+   */
+
+  let cancelButton =
+    document.querySelector(
+      "#cancelEdit"
+    );
+
+
+  if (!cancelButton) {
+
+    cancelButton =
+      document.createElement(
+        "button"
+      );
+
+    cancelButton.type =
+      "button";
+
+    cancelButton.id =
+      "cancelEdit";
+
+    cancelButton.className =
+      "cancel-button";
+
+    cancelButton.textContent =
+      "Cancelar edição";
+
+
+    saveButton.parentNode.insertBefore(
+      cancelButton,
+      saveButton
+    );
+
+
+    cancelButton.addEventListener(
+      "click",
+      cancelarEdicao
+    );
+
+  }
+
+
+  cancelButton.style.display =
+    "block";
+
+
+  status(
+    "A editar: " +
+    promocao.titulo
+  );
+
+
+  form.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
   });
 
 }
@@ -706,28 +816,30 @@ mostrarBotaoCancelar();
 
 function cancelarEdicao() {
 
-  modoEdicao = false;
-
-  idEdicao = null;
-
-  imagemAtual = "";
-
+  editarId = null;
 
   form.reset();
 
+  dateInput.value = hoje;
 
-  dateInput.value =
-    new Date()
-      .toISOString()
-      .split("T")[0];
-
+  imageInput.required = true;
 
   preview.innerHTML = "";
 
 
-  /*
-   * Se o botão cancelar existir
-   */
+  const saveButton =
+    form.querySelector(
+      ".save-button"
+    );
+
+
+  if (saveButton) {
+
+    saveButton.textContent =
+      "Adicionar promoção";
+
+  }
+
 
   const cancelButton =
     document.querySelector(
@@ -737,7 +849,8 @@ function cancelarEdicao() {
 
   if (cancelButton) {
 
-    cancelButton.remove();
+    cancelButton.style.display =
+      "none";
 
   }
 
@@ -745,73 +858,7 @@ function cancelarEdicao() {
 
 
 /* =====================================
-   BOTÃO CANCELAR EDIÇÃO
-===================================== */
-
-function mostrarBotaoCancelar() {
-
-  if (
-    document.querySelector(
-      "#cancelEdit"
-    )
-  ) {
-    return;
-  }
-
-
-  const button =
-    document.createElement(
-      "button"
-    );
-
-
-  button.type =
-    "button";
-
-  button.id =
-    "cancelEdit";
-
-  button.className =
-    "cancel-button";
-
-  button.textContent =
-    "Cancelar edição";
-
-
-  button.addEventListener(
-    "click",
-    () => {
-
-      cancelarEdicao();
-
-      status(
-        "Edição cancelada."
-      );
-
-    }
-  );
-
-
-  form.appendChild(
-    button
-  );
-
-}
-
-
-/*
- * Quando entramos em edição,
- * criar botão cancelar.
- */
-
-const observer =
-  new MutationObserver(
-    () => {}
-  );
-
-
-/* =====================================
-   LIMPAR TODAS
+   APAGAR TODAS
 ===================================== */
 
 clearAll.addEventListener(
@@ -859,7 +906,7 @@ clearAll.addEventListener(
 
 
 /* =====================================
-   PROTEÇÃO HTML
+   SEGURANÇA HTML
 ===================================== */
 
 function escapeHtml(value) {
@@ -876,27 +923,6 @@ function escapeHtml(value) {
       "'": "&#039;"
     }[char])
   );
-
-}
-
-
-function escapeAttribute(value) {
-
-  return String(
-    value ?? ""
-  )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    );
 
 }
 
