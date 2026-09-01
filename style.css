@@ -671,67 +671,135 @@ input {
 
 }
 
-/* =====================================
-   CARTÕES DE OFERTAS — MODERNOS
-===================================== */
+
+/* =========================================
+   OFERTAS
+========================================= */
+
+.offers-section {
+
+    width: min(
+        calc(100% - 40px),
+        1500px
+    );
+
+    margin: auto;
+
+    padding: 35px 0 80px;
+
+}
+
+
+.offers-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    margin-bottom: 24px;
+
+}
+
+
+.offers-note {
+
+    color: #999999;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================
+   GRELHA
+========================================= */
+
+.offers-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 20px;
+
+}
+
+
+/* =========================================
+   CARTÃO
+========================================= */
 
 .offer-card {
-    background: #ffffff;
-    border: 1px solid #e2e2e2;
-    border-radius: 8px;
+
+    min-width: 0;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
     overflow: hidden;
 
     transition:
         transform .25s ease,
         box-shadow .25s ease,
         border-color .25s ease;
+
 }
+
 
 .offer-card:hover {
+
     transform: translateY(-5px);
 
-    border-color: #cccccc;
+    border-color: #d2d2cf;
 
     box-shadow:
-        0 12px 30px rgba(0,0,0,.10);
+        0 18px 40px rgba(0, 0, 0, .09);
+
 }
 
 
-/* =====================================
-   LINK
-===================================== */
+/* =========================================
+   LINK / IMAGEM
+========================================= */
 
 .offer-link {
+
     display: block;
 
-    color: inherit;
     text-decoration: none;
+
 }
 
 
-/* =====================================
-   IMAGEM
-===================================== */
-
 .offer-image {
-    position: relative;
 
     width: 100%;
 
     aspect-ratio: 1 / 1;
 
-    background: #f1f1f1;
+    background: #eeeeee;
 
     overflow: hidden;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
 }
 
 
 .offer-image img {
+
     width: 100%;
+
     height: 100%;
 
     object-fit: contain;
@@ -739,197 +807,17 @@ input {
     display: block;
 
     transition:
-        transform .4s ease;
+        transform .35s ease;
+
 }
 
 
-.offer-card:hover .offer-image img {
+.offer-card:hover
+.offer-image img {
+
     transform: scale(1.035);
-}
-
-
-/* =====================================
-   OVERLAY "VER OFERTA"
-===================================== */
-
-.offer-overlay {
-    position: absolute;
-
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    display: flex;
-    justify-content: center;
-
-    padding: 18px;
-
-    background:
-        linear-gradient(
-            to top,
-            rgba(0,0,0,.55),
-            transparent
-        );
-
-    opacity: 0;
-
-    transform: translateY(8px);
-
-    transition:
-        opacity .25s ease,
-        transform .25s ease;
-}
-
-
-.offer-overlay span {
-    background: #000000;
-
-    color: #ffffff;
-
-    padding: 9px 15px;
-
-    border-radius: 4px;
-
-    font-size: 11px;
-    font-weight: 700;
-}
-
-
-.offer-card:hover .offer-overlay {
-    opacity: 1;
-
-    transform: translateY(0);
-}
-
-
-/* =====================================
-   INFORMAÇÃO
-===================================== */
-
-.offer-info {
-    padding: 13px 14px 15px;
-}
-
-
-/* =====================================
-   ETIQUETA CATEGORIA
-===================================== */
-
-.offer-category {
-    display: inline-block;
-
-    margin-bottom: 7px;
-
-    padding: 4px 7px;
-
-    background: #f2f2f2;
-
-    color: #666666;
-
-    border-radius: 3px;
-
-    font-size: 8px;
-    font-weight: 700;
-
-    letter-spacing: .3px;
-
-    text-transform: uppercase;
-}
-
-
-/* =====================================
-   TÍTULO + SETA
-===================================== */
-
-.offer-bottom {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 12px;
-}
-
-
-.offer-title {
-    margin: 0;
-
-    color: #111111;
-
-    font-size: 14px;
-
-    line-height: 1.3;
-
-    font-weight: 700;
-}
-
-
-.offer-arrow {
-    flex-shrink: 0;
-
-    font-size: 18px;
-
-    color: #999999;
-
-    transform: translateX(0);
-
-    transition:
-        color .2s ease,
-        transform .2s ease;
-}
-
-
-.offer-card:hover .offer-arrow {
-    color: #000000;
-
-    transform: translateX(4px);
-}
-
-
-/* =====================================
-   SEM IMAGEM
-===================================== */
-
-.no-image {
-    color: #999999;
-
-    font-size: 13px;
-}
-
-
-/* =====================================
-   MOBILE
-===================================== */
-
-@media (max-width: 600px) {
-
-    .offer-card {
-        border-radius: 7px;
-    }
-
-    .offer-overlay {
-        display: none;
-    }
-
-    .offer-info {
-        padding: 11px 12px 13px;
-    }
-
-    .offer-category {
-        margin-bottom: 5px;
-    }
-
-    .offer-title {
-        font-size: 13px;
-    }
-
-    .offer-arrow {
-        font-size: 16px;
-    }
 
 }
-
 
 
 /* =========================================
