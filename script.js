@@ -19,10 +19,39 @@ const mainMenu =
 
 let categoriaAtual = "Todas";
 
+let ofertas = [];
+
+
+async function carregarOfertas() {
+    try {
+        const resposta = await fetch("/api/ofertas");
+
+        if (!resposta.ok) {
+            throw new Error("Erro ao carregar promoções");
+        }
+
+        const dados = await resposta.json();
+
+        ofertas = dados.ofertas || [];
+
+        mostrarOfertas();
+
+    } catch (erro) {
+
+        console.error("Erro ao carregar ofertas:", erro);
+
+        ofertas = [];
+
+        mostrarOfertas();
+    }
+}
+
 
 /* =====================================
    MOSTRAR OFERTAS
 ===================================== */
+
+
 
 function mostrarOfertas() {
 
@@ -269,4 +298,4 @@ document
    INICIAR
 ===================================== */
 
-mostrarOfertas();
+carregarOfertas();
