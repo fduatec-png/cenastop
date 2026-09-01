@@ -151,7 +151,7 @@ async function carregarPromocoes() {
 
     mostrarPromocoes(promocoes);
 
-    status("");
+    
 
   } catch (e) {
 
