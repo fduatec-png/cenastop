@@ -9,7 +9,7 @@ const imageInput =
     document.querySelector("#image");
 
 const preview =
-    document.querySelector("#preview");
+    document.querySelector("#preview"); 
 
 const offerList =
     document.querySelector("#offerList");
