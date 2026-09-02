@@ -136,7 +136,15 @@ imageInput.addEventListener(
 ===================================== */
 
 function atualizarTipoConteudo() {
+if (contentType) {
+    contentType.addEventListener(
+        "change",
+        atualizarTipoConteudo
+    );
 
+    atualizarTipoConteudo();
+}
+   
     if (!contentType) {
         return;
     }
