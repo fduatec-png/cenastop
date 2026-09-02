@@ -460,9 +460,119 @@ function mostrarMarcas(marcas) {
                     ${escapeHtml(marca.link)}
                 </p>
             </div>
+
+            <div class="offer-actions">
+
+                <button
+                    type="button"
+                    class="edit-button brand-edit-button"
+                >
+                    Editar
+                </button>
+
+                <button
+                    type="button"
+                    class="delete-button brand-delete-button"
+                >
+                    Apagar
+                </button>
+
+            </div>
         `;
 
         brandList.appendChild(item);
+
+
+        /* EDITAR MARCA */
+
+        const editButton =
+            item.querySelector(
+                ".brand-edit-button"
+            );
+
+        editButton.addEventListener(
+            "click",
+            () => {
+
+                const nome =
+                    prompt(
+                        "Nome da marca:",
+                        marca.nome || ""
+                    );
+
+                if (nome === null) {
+                    return;
+                }
+
+                const novoNome =
+                    nome.trim();
+
+                if (!novoNome) {
+                    alert(
+                        "Indique o nome da marca."
+                    );
+                    return;
+                }
+
+
+                const link =
+                    prompt(
+                        "Link da marca:",
+                        marca.link || ""
+                    );
+
+                if (link === null) {
+                    return;
+                }
+
+                const novoLink =
+                    link.trim();
+
+                if (!novoLink) {
+                    alert(
+                        "Indique o link da marca."
+                    );
+                    return;
+                }
+
+
+                editarMarca(
+                    marca,
+                    novoNome,
+                    novoLink
+                );
+
+            }
+        );
+
+
+        /* APAGAR MARCA */
+
+        const deleteButton =
+            item.querySelector(
+                ".brand-delete-button"
+            );
+
+        deleteButton.addEventListener(
+            "click",
+            () => {
+
+                const confirmar =
+                    confirm(
+                        `Apagar a marca "${marca.nome}"?`
+                    );
+
+                if (!confirmar) {
+                    return;
+                }
+
+                apagarMarca(
+                    marca.id,
+                    marca.nome
+                );
+
+            }
+        );
 
     });
 }
