@@ -1,59 +1,91 @@
 <!doctype html>
 <html lang="pt-PT">
+
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1"
+>
 
 <title>50PORCENTO - Administração</title>
 
-<link rel="stylesheet" href="admin.css">
+<link
+  rel="stylesheet"
+  href="admin.css"
+>
+
 </head>
+
 
 <body>
 
-  <div id="loginScreen">
 
-    <div class="login-box">
+<!-- =====================================
+     LOGIN
+====================================== -->
 
-        <h1>50PORCENTO</h1>
+<div id="loginScreen">
 
-        <p>Área de administração</p>
+  <div class="login-box">
 
-        <form id="loginForm">
+    <h1>50PORCENTO</h1>
 
-            <label for="loginPassword">
-                Palavra-passe
-            </label>
+    <p>
+      Área de administração
+    </p>
 
-            <input
-                id="loginPassword"
-                type="password"
-                autocomplete="current-password"
-                placeholder="Introduza a palavra-passe"
-                required
-            >
+    <form id="loginForm">
 
-            <button type="submit">
-                Entrar
-            </button>
+      <label for="loginPassword">
+        Palavra-passe
+      </label>
 
-            <p id="loginStatus"></p>
+      <input
+        id="loginPassword"
+        type="password"
+        autocomplete="current-password"
+        placeholder="Introduza a palavra-passe"
+        required
+      >
 
-        </form>
+      <button type="submit">
+        Entrar
+      </button>
 
-    </div>
+      <p id="loginStatus"></p>
+
+    </form>
+
+  </div>
 
 </div>
-  
+
+
+
+<!-- =====================================
+     PAINEL DE ADMINISTRAÇÃO
+====================================== -->
+
+<div id="adminPanel" hidden>
+
+
 <header class="admin-header">
 
   <div class="admin-logo">
+
     50<span>PORCENTO</span>
+
   </div>
 
-  <div>Administração</div>
+  <div>
+    Administração
+  </div>
 
 </header>
+
 
 
 <main class="admin-container">
@@ -67,7 +99,9 @@
 
     <div>
 
-      <h1>Promoções</h1>
+      <h1>
+        Promoções
+      </h1>
 
       <p>
         Adicione e organize as promoções do 50PORCENTO.
@@ -89,49 +123,94 @@
 
   <section class="admin-card">
 
-    <h2>Nova promoção</h2>
+    <h2>
+      Nova promoção
+    </h2>
 
 
     <form id="offerForm">
 
-<div class="form-group">
-    <label for="contentType">Tipo de conteúdo</label>
 
-    <select id="contentType">
-        <option value="promocao">Promoção</option>
-        <option value="marca">Marca</option>
-    </select>
-</div>
+      <div class="form-group">
+
+        <label for="contentType">
+          Tipo de conteúdo
+        </label>
+
+        <select id="contentType">
+
+          <option value="promocao">
+            Promoção
+          </option>
+
+          <option value="marca">
+            Marca
+          </option>
+
+        </select>
+
+      </div>
+
+
+
+      <!-- =====================================
+           CAMPOS DA MARCA
+      ====================================== -->
+
       <div id="brandFields" hidden>
 
-    <div class="form-group">
-        <label for="brandName">Nome da marca</label>
-        <input
+        <div class="form-group">
+
+          <label for="brandName">
+            Nome da marca
+          </label>
+
+          <input
             id="brandName"
             type="text"
             placeholder="Ex.: Nike"
-        >
-    </div>
+          >
 
-    <div class="form-group">
-        <label for="brandLogo">Logo da marca</label>
-        <input
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="brandLogo">
+            Logo da marca
+          </label>
+
+          <input
             id="brandLogo"
             type="file"
             accept="image/*"
-        >
-    </div>
+          >
 
-    <div class="form-group">
-        <label for="brandLink">Link da marca</label>
-        <input
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="brandLink">
+            Link da marca
+          </label>
+
+          <input
             id="brandLink"
             type="url"
             placeholder="https://..."
-        >
-    </div>
+          >
 
-</div>
+        </div>
+
+      </div>
+
+
+
+      <!-- =====================================
+           CAMPOS DA PROMOÇÃO
+      ====================================== -->
+
       <div class="form-group">
 
         <label for="title">
@@ -145,14 +224,23 @@
           required
         >
 
-        
       </div>
 
 
-<div class="form-group">
-  <label for="brand">Marca</label>
-  <input id="brand" type="text" placeholder="Ex.: Nike">
-</div>
+
+      <div class="form-group">
+
+        <label for="brand">
+          Marca
+        </label>
+
+        <input
+          id="brand"
+          type="text"
+          placeholder="Ex.: Nike"
+        >
+
+      </div>
 
 
 
@@ -165,7 +253,10 @@
             Categoria
           </label>
 
-          <select id="category" required>
+          <select
+            id="category"
+            required
+          >
 
             <option value="">
               Escolher categoria
@@ -276,32 +367,11 @@
 
 
 
-      <div class="form-group">
-
-        <label for="password">
-          Palavra-passe de administração
-        </label>
-
-        <input
-          id="password"
-          type="password"
-          autocomplete="current-password"
-          required
-        >
-
-        <small>
-          A palavra-passe é enviada apenas por HTTPS para a API.
-        </small>
-
-      </div>
-
-
-
       <button
         type="submit"
         class="save-button"
       >
-        Adicionar!!!
+        Adicionar
       </button>
 
 
@@ -321,7 +391,9 @@
     hidden
   >
 
-    <h2>Editar"!!!</h2>
+    <h2>
+      Editar
+    </h2>
 
 
     <form id="editForm">
@@ -335,7 +407,6 @@
       <div class="form-group">
 
         <label for="editTitle">
-          
         </label>
 
         <input
@@ -469,23 +540,6 @@
 
 
 
-      <div class="form-group">
-
-        <label for="editPassword">
-          Palavra-passe de administração
-        </label>
-
-        <input
-          id="editPassword"
-          type="password"
-          autocomplete="current-password"
-          required
-        >
-
-      </div>
-
-
-
       <div class="form-row">
 
         <button
@@ -560,28 +614,47 @@
 
 
   </section>
-<section class="admin-card">
+
+
+
+  <!-- =====================================
+       MARCAS
+  ====================================== -->
+
+  <section class="admin-card">
 
     <div class="list-header">
-        <div>
-            <h2>Marcas</h2>
-            <p id="brandCount">
-                0 marcas
-            </p>
-        </div>
+
+      <div>
+
+        <h2>
+          Marcas
+        </h2>
+
+        <p id="brandCount">
+          0 marcas
+        </p>
+
+      </div>
+
     </div>
+
 
     <div
-        id="brandList"
-        class="offer-list">
-    </div>
+      id="brandList"
+      class="offer-list"
+    ></div>
 
-</section>
+  </section>
+
 
 </main>
+
+</div>
 
 
 <script src="admin.js"></script>
 
 </body>
+
 </html>
