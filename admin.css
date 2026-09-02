@@ -624,3 +624,44 @@ input[type="file"] {
 #brandFields[hidden] {
     display: none !important;
 }
+/* =====================================
+   LISTA DE MARCAS
+===================================== */
+
+#brandList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+#brandList .offer-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    border: 1px solid #e6e6e6;
+    border-radius: 12px;
+    background: #fff;
+}
+
+#brandList .offer-item img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+}
+
+#brandList .offer-item h3 {
+    margin: 0 0 6px;
+    font-size: 16px;
+}
+
+#brandList .offer-item p {
+    margin: 0;
+    font-size: 13px;
+    color: #777;
+    word-break: break-word;
+}
