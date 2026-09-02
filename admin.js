@@ -594,6 +594,137 @@ form.addEventListener(
     async function (event) {
 
         event.preventDefault();
+               /* =================================
+           ADICAR MARCA
+        ================================= */
+
+        const tipo = contentType
+            ? contentType.value
+            : "promocao";
+
+        if (tipo === "marca") {
+
+            if (modoEdicao) {
+                status(
+                    "Cancele primeiro a edição da promoção.",
+                    true
+                );
+                return;
+            }
+
+            const nome =
+                document
+                    .querySelector("#brandName")
+                    .value
+                    .trim();
+
+            const linkMarca =
+                document
+                    .querySelector("#brandLink")
+                    .value
+                    .trim();
+
+            const logoFile =
+                document
+                    .querySelector("#brandLogo")
+                    .files[0];
+
+
+            /* Validações */
+
+            if (!nome) {
+                status(
+                    "Introduza o nome da marca.",
+                    true
+                );
+                return;
+            }
+
+            if (!linkMarca) {
+                status(
+                    "Introduza o link da marca.",
+                    true
+                );
+                return;
+            }
+
+            if (!logoFile) {
+                status(
+                    "Escolha o logo da marca.",
+                    true
+                );
+                return;
+            }
+
+            if (!passwordInput.value) {
+                status(
+                    "Introduza a palavra-passe de administração.",
+                    true
+                );
+                return;
+            }
+
+
+            try {
+
+                status(
+                    "A preparar o logo..."
+                );
+
+                const logo =
+                    await comprimirImagem(
+                        logoFile
+                    );
+
+
+                status(
+                    "A guardar marca..."
+                );
+
+
+                await api(
+                    "/api/marcas",
+                    {
+                        method: "POST",
+
+                        body:
+                            JSON.stringify({
+                                nome: nome,
+                                logo: logo,
+                                link: linkMarca
+                            })
+                    }
+                );
+
+
+                form.reset();
+
+                dateInput.value =
+                    obterHoje();
+
+                if (preview) {
+                    preview.innerHTML = "";
+                }
+
+                atualizarTipoConteudo();
+
+                status(
+                    "Marca adicionada com sucesso."
+                );
+
+            } catch (e) {
+
+                console.error(e);
+
+                status(
+                    e.message ||
+                    "Não foi possível guardar a marca.",
+                    true
+                );
+            }
+
+            return;
+        }
 const tipo = contentType ? contentType.value : "promocao";
 
 if (tipo === "marca") {
