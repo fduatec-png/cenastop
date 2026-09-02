@@ -603,7 +603,7 @@ const tipo = contentType ? contentType.value : "promocao";
 
 if (tipo === "marca") {
     if (modoEdicao) {
-        mostrarStatus("Cancele primeiro a edição da promoção.", true);
+        status("Cancele primeiro a edição da promoção.", true);
         return;
     }
 
@@ -612,22 +612,22 @@ if (tipo === "marca") {
     const logoFile = document.querySelector("#brandLogo").files[0];
 
     if (!nome) {
-        mostrarStatus("Indique o nome da marca.", true);
+        status("Indique o nome da marca.", true);
         return;
     }
 
     if (!linkMarca) {
-        mostrarStatus("Indique o link da marca.", true);
+        status("Indique o link da marca.", true);
         return;
     }
 
     if (!logoFile) {
-        mostrarStatus("Selecione o logo da marca.", true);
+        status("Selecione o logo da marca.", true);
         return;
     }
 
     try {
-        mostrarStatus("A guardar marca...");
+        status("A guardar marca...");
 
         const logo = await comprimirImagem(logoFile);
 
@@ -640,7 +640,7 @@ if (tipo === "marca") {
             })
         });
 
-        mostrarStatus("Marca adicionada com sucesso!");
+        status("Marca adicionada com sucesso!");
 
         form.reset();
 
@@ -661,7 +661,7 @@ if (tipo === "marca") {
 
     } catch (error) {
         console.error(error);
-        mostrarStatus(error.message || "Erro ao guardar a marca.", true);
+        status(error.message || "Erro ao guardar a marca.", true);
     }
 
     return;
