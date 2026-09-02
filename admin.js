@@ -505,7 +505,11 @@ form.addEventListener(
                 .querySelector("#title")
                 .value
                 .trim();
-
+const brand =
+    document
+        .querySelector("#brand")
+        .value
+        .trim();
 
         const category =
             document
@@ -651,6 +655,7 @@ form.addEventListener(
                         body:
                             JSON.stringify({
                                 titulo: title,
+                               marca: brand,
                                 categoria: category,
                                 link: link,
                                 data: date,
@@ -705,6 +710,7 @@ form.addEventListener(
                         body:
                             JSON.stringify({
                                 titulo: title,
+                               marca: brand,
                                 categoria: category,
                                 link: link,
                                 data: date,
@@ -884,7 +890,10 @@ function iniciarEdicao(
         .querySelector("#title")
         .value =
             promocao.titulo || "";
-
+document
+    .querySelector("#brand")
+    .value =
+        promocao.marca || "";
 
     document
         .querySelector("#category")
