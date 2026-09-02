@@ -616,3 +616,11 @@ input[type="file"] {
     }
 
 }
+
+/* ESCONDER CAMPOS DESATIVADOS */
+
+.form-group[hidden],
+.form-row[hidden],
+#brandFields[hidden] {
+    display: none !important;
+}
