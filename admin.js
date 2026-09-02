@@ -240,8 +240,10 @@ async function api(
     options = {}
 ) {
 
-    const password =
-        passwordInput.value;
+  const password =
+    passwordInput.value ||
+    sessionStorage.getItem("adminPassword") ||
+    "";
 
     const headers =
         new Headers(
