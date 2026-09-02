@@ -136,37 +136,49 @@ imageInput.addEventListener(
 ===================================== */
 
 function atualizarTipoConteudo() {
-if (contentType) {
-    contentType.addEventListener(
-        "change",
-        atualizarTipoConteudo
-    );
 
-    atualizarTipoConteudo();
-}
-   
     if (!contentType) {
         return;
     }
 
-    const tipo =
-        contentType.value;
+    const tipo = contentType.value;
 
     const brandFields =
         document.querySelector("#brandFields");
 
-
-    /* Campos específicos de marca */
+    /* CAMPOS DE MARCA */
 
     if (brandFields) {
-
         brandFields.hidden =
             tipo !== "marca";
+    }
 
+    const brandName =
+        document.querySelector("#brandName");
+
+    const brandLogo =
+        document.querySelector("#brandLogo");
+
+    const brandLink =
+        document.querySelector("#brandLink");
+
+    if (brandName) {
+        brandName.required =
+            tipo === "marca";
+    }
+
+    if (brandLogo) {
+        brandLogo.required =
+            tipo === "marca";
+    }
+
+    if (brandLink) {
+        brandLink.required =
+            tipo === "marca";
     }
 
 
-    /* Campos específicos de promoção */
+    /* CAMPOS DE PROMOÇÃO */
 
     const camposPromocao = [
         "#title",
@@ -177,35 +189,33 @@ if (contentType) {
         "#image"
     ];
 
-
     camposPromocao.forEach(
-    selector => {
+        selector => {
 
-        const campo =
-            document.querySelector(
-                selector
-            );
+            const campo =
+                document.querySelector(selector);
 
-        if (!campo) {
-            return;
+            if (!campo) {
+                return;
+            }
+
+            const grupo =
+                campo.closest(".form-group");
+
+            if (grupo) {
+                grupo.hidden =
+                    tipo === "marca";
+            }
+
+            campo.required =
+                tipo !== "marca";
         }
-
-        const grupo =
-            campo.closest(
-                ".form-group"
-            );
-
-        if (grupo) {
-            grupo.style.display =
-                tipo === "marca"
-                    ? "none"
-                    : "";
-        }
-
-    }
-);
-
+    );
 }
+
+
+/* ALTERAR TIPO */
+
 if (contentType) {
 
     contentType.addEventListener(
