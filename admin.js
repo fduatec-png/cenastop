@@ -144,20 +144,13 @@ function atualizarTipoConteudo() {
     const tipo =
         contentType.value;
 
-    console.log(
-        "Tipo selecionado:",
-        tipo
-    );
-}
+    const brandFields =
+        document.querySelector("#brandFields");
 
-if (contentType) {
-
-    contentType.addEventListener(
-        "change",
-        atualizarTipoConteudo
-    );
-
-    atualizarTipoConteudo();
+    if (brandFields) {
+        brandFields.hidden =
+            tipo !== "marca";
+    }
 }
 
 /* =====================================
