@@ -318,35 +318,37 @@ export async function onRequest(context) {
      DELETE — APAGAR
   ===================================== */
 
-  if (request.method === "DELETE") {
+ if (request.method === "DELETE") {
 
-    const id =
-      url.searchParams.get("id");
+  const id = url.searchParams.get("id");
 
+  if (id) {
 
-    if (id) {
-
-      await env.DB.prepare(
-        "DELETE FROM promocoes WHERE id = ?"
-      )
-      .bind(id)
-      .run();
-
-    } else {
-
-      await env.DB.prepare(
-        "DELETE FROM promocoes"
-      )
-      .run();
-
-    }
-
+    const result = await env.DB.prepare(
+      "DELETE FROM promocoes WHERE id = ?"
+    )
+    .bind(id)
+    .run();
 
     return Response.json({
-      ok: true
+      ok: true,
+      deleted: result.meta.changes || 0
+    });
+
+  } else {
+
+    const result = await env.DB.prepare(
+      "DELETE FROM promocoes"
+    )
+    .run();
+
+    return Response.json({
+      ok: true,
+      deleted: result.meta.changes || 0
     });
 
   }
+}
 
 
   /* =====================================
