@@ -171,31 +171,31 @@ function atualizarTipoConteudo() {
 
 
     camposPromocao.forEach(
-        selector => {
+    selector => {
 
-            const campo =
-                document.querySelector(
-                    selector
-                );
+        const campo =
+            document.querySelector(
+                selector
+            );
 
-            if (!campo) {
-                return;
-            }
-
-            const grupo =
-                campo.closest(
-                    ".form-group"
-                );
-
-            if (grupo) {
-
-                grupo.hidden =
-                    tipo === "marca";
-
-            }
-
+        if (!campo) {
+            return;
         }
-    );
+
+        const grupo =
+            campo.closest(
+                ".form-group"
+            );
+
+        if (grupo) {
+            grupo.style.display =
+                tipo === "marca"
+                    ? "none"
+                    : "";
+        }
+
+    }
+);
 
 }
 if (contentType) {
