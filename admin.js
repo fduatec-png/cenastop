@@ -198,7 +198,15 @@ function atualizarTipoConteudo() {
     );
 
 }
+if (contentType) {
 
+    contentType.addEventListener(
+        "change",
+        atualizarTipoConteudo
+    );
+
+    atualizarTipoConteudo();
+}
 /* =====================================
    API
 ===================================== */
