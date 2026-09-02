@@ -772,7 +772,7 @@ if (tipo === "marca") {
         }
 
         atualizarTipoConteudo();
-
+await carregarMarcas();
     } catch (error) {
         console.error(error);
         status(error.message || "Erro ao guardar a marca.", true);
