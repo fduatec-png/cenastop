@@ -576,7 +576,73 @@ form.addEventListener(
     async function (event) {
 
         event.preventDefault();
+const tipo = contentType ? contentType.value : "promocao";
 
+if (tipo === "marca") {
+    if (modoEdicao) {
+        mostrarStatus("Cancele primeiro a edição da promoção.", true);
+        return;
+    }
+
+    const nome = document.querySelector("#brandName").value.trim();
+    const linkMarca = document.querySelector("#brandLink").value.trim();
+    const logoFile = document.querySelector("#brandLogo").files[0];
+
+    if (!nome) {
+        mostrarStatus("Indique o nome da marca.", true);
+        return;
+    }
+
+    if (!linkMarca) {
+        mostrarStatus("Indique o link da marca.", true);
+        return;
+    }
+
+    if (!logoFile) {
+        mostrarStatus("Selecione o logo da marca.", true);
+        return;
+    }
+
+    try {
+        mostrarStatus("A guardar marca...");
+
+        const logo = await comprimirImagem(logoFile);
+
+        await api("/api/marcas", {
+            method: "POST",
+            body: JSON.stringify({
+                nome: nome,
+                logo: logo,
+                link: linkMarca
+            })
+        });
+
+        mostrarStatus("Marca adicionada com sucesso!");
+
+        form.reset();
+
+        if (dateInput) {
+            dateInput.value = new Date().toISOString().split("T")[0];
+        }
+
+        if (preview) {
+            preview.hidden = true;
+            preview.src = "";
+        }
+
+        if (imageInput) {
+            imageInput.required = true;
+        }
+
+        atualizarTipoConteudo();
+
+    } catch (error) {
+        console.error(error);
+        mostrarStatus(error.message || "Erro ao guardar a marca.", true);
+    }
+
+    return;
+}
 
         const title =
             document
