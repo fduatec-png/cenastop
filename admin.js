@@ -29,8 +29,7 @@ const clearAll =
 const dateInput =
     document.querySelector("#date");
 
-const passwordInput =
-    document.querySelector("#password");
+
 const loginScreen =
     document.querySelector("#loginScreen");
 
@@ -256,10 +255,8 @@ async function api(
     options = {}
 ) {
 
-  const password =
-    passwordInput.value ||
-    sessionStorage.getItem("adminPassword") ||
-    "";
+ const password =
+    adminPassword;
 
     const headers =
         new Headers(
@@ -1582,11 +1579,9 @@ function cancelarEdicao() {
         "";
 
 
-    const passwordGuardada = passwordInput.value;
+    
 
 form.reset();
-
-passwordInput.value = passwordGuardada;
 
 
     dateInput.value =
@@ -1942,5 +1937,10 @@ if (adminPassword) {
    INICIAR
 ===================================== */
 
-carregarPromocoes();
-carregarMarcas();
+if (adminPassword) {
+    mostrarPainel();
+    carregarPromocoes();
+    carregarMarcas();
+} else {
+    mostrarLogin();
+}
