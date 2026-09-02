@@ -146,7 +146,7 @@ function atualizarTipoConteudo() {
     const brandFields =
         document.querySelector("#brandFields");
 
-    /* CAMPOS DE MARCA */
+    /* Campos da marca */
 
     if (brandFields) {
         brandFields.hidden =
@@ -178,7 +178,7 @@ function atualizarTipoConteudo() {
     }
 
 
-    /* CAMPOS DE PROMOÇÃO */
+    /* Campos da promoção */
 
     const camposPromocao = [
         "#title",
@@ -214,7 +214,7 @@ function atualizarTipoConteudo() {
 }
 
 
-/* ALTERAR TIPO */
+/* Alterar entre Promoção e Marca */
 
 if (contentType) {
 
