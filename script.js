@@ -188,10 +188,7 @@ function mostrarOfertas() {
                 oferta.categoria === categoriaAtual;
 
 
-            const texto =
-                `${oferta.titulo || ""}
-                 ${oferta.categoria || ""}`
-                .toLowerCase();
+            const texto = `${oferta.titulo || ""} ${oferta.marca || ""} ${oferta.categoria || ""}`.toLowerCase();
 
 
             const pesquisaOK =
