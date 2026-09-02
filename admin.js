@@ -31,7 +31,23 @@ const dateInput =
 
 const passwordInput =
     document.querySelector("#password");
+const loginScreen =
+    document.querySelector("#loginScreen");
 
+const adminPanel =
+    document.querySelector("#adminPanel");
+
+const loginForm =
+    document.querySelector("#loginForm");
+
+const loginPassword =
+    document.querySelector("#loginPassword");
+
+const loginStatus =
+    document.querySelector("#loginStatus");
+
+let adminPassword =
+    sessionStorage.getItem("adminPassword") || "";
 const statusBox =
     document.querySelector("#status");
 
@@ -1084,16 +1100,7 @@ const brand =
         }
 
 
-        if (!passwordInput.value) {
-
-            status(
-                "Introduza a palavra-passe de administração.",
-                true
-            );
-
-            return;
-
-        }
+    
 
 
         try {
@@ -1808,7 +1815,129 @@ async function apagarMarca(id, nome) {
     }
 
 }
+/* =====================================
+   LOGIN
+===================================== */
 
+function mostrarPainel() {
+
+    if (loginScreen) {
+        loginScreen.hidden = true;
+    }
+
+    if (adminPanel) {
+        adminPanel.hidden = false;
+    }
+
+}
+
+
+function mostrarLogin() {
+
+    if (loginScreen) {
+        loginScreen.hidden = false;
+    }
+
+    if (adminPanel) {
+        adminPanel.hidden = true;
+    }
+
+}
+
+
+if (loginForm) {
+
+    loginForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+            const password =
+                loginPassword.value.trim();
+
+            if (!password) {
+                loginStatus.textContent =
+                    "Introduza a palavra-passe.";
+                return;
+            }
+
+            loginStatus.textContent =
+                "A verificar...";
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/admin-login",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+                            body: JSON.stringify({
+                                password: password
+                            }),
+                            cache: "no-store"
+                        }
+                    );
+
+                const data =
+                    await response
+                        .json()
+                        .catch(() => ({}));
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.error ||
+                        "Palavra-passe incorreta."
+                    );
+                }
+
+                adminPassword =
+                    password;
+
+                sessionStorage.setItem(
+                    "adminPassword",
+                    password
+                );
+
+                loginPassword.value = "";
+
+                loginStatus.textContent = "";
+
+                mostrarPainel();
+
+                carregarPromocoes();
+                carregarMarcas();
+
+            } catch (error) {
+
+                console.error(error);
+
+                loginStatus.textContent =
+                    error.message;
+
+            }
+
+        }
+    );
+
+}
+
+
+/* Sessão já existente */
+
+if (adminPassword) {
+
+    mostrarPainel();
+
+} else {
+
+    mostrarLogin();
+
+}
 /* =====================================
    INICIAR
 ===================================== */
