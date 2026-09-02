@@ -17,6 +17,12 @@ const offerList =
 const offerCount =
     document.querySelector("#offerCount");
 
+const brandList =
+    document.querySelector("#brandList");
+
+const brandCount =
+    document.querySelector("#brandCount");
+
 const clearAll =
     document.querySelector("#clearAll");
 
@@ -351,7 +357,115 @@ async function carregarPromocoes() {
     }
 
 }
+/* =====================================
+   CARREGAR MARCAS
+===================================== */
 
+async function carregarMarcas() {
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/marcas?t=${Date.now()}`,
+                {
+                    cache: "no-store"
+                }
+            );
+
+        if (!response.ok) {
+            throw new Error(
+                `Erro ${response.status}`
+            );
+        }
+
+        const data =
+            await response.json();
+
+        const marcas =
+            Array.isArray(data.marcas)
+                ? data.marcas
+                : [];
+
+        mostrarMarcas(marcas);
+
+    } catch (e) {
+
+        console.error(e);
+
+        if (brandList) {
+            brandList.innerHTML = `
+                <p>
+                    Não foi possível carregar as marcas.
+                </p>
+            `;
+        }
+    }
+}
+
+
+/* =====================================
+   MOSTRAR MARCAS
+===================================== */
+
+function mostrarMarcas(marcas) {
+
+    if (!brandList) {
+        return;
+    }
+
+    brandList.innerHTML = "";
+
+    if (brandCount) {
+        brandCount.textContent =
+            `${marcas.length} marca` +
+            (
+                marcas.length === 1
+                    ? ""
+                    : "s"
+            );
+    }
+
+    if (!marcas.length) {
+
+        brandList.innerHTML = `
+            <p>
+                Ainda não existem marcas.
+            </p>
+        `;
+
+        return;
+    }
+
+    marcas.forEach(marca => {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "offer-item";
+
+        item.innerHTML = `
+            <img
+                src="${escapeAttribute(marca.logo || "")}"
+                alt="${escapeAttribute(marca.nome || "Marca")}"
+            >
+
+            <div>
+                <h3>
+                    ${escapeHtml(marca.nome)}
+                </h3>
+
+                <p>
+                    ${escapeHtml(marca.link)}
+                </p>
+            </div>
+        `;
+
+        brandList.appendChild(item);
+
+    });
+}
 
 /* =====================================
    MOSTRAR PROMOÇÕES
@@ -1416,3 +1530,4 @@ function escapeAttribute(
 ===================================== */
 
 carregarPromocoes();
+carregarMarcas();
