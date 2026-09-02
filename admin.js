@@ -29,6 +29,9 @@ const passwordInput =
 const statusBox =
     document.querySelector("#status");
 
+const contentType =
+    document.querySelector("#contentType");
+
 
 /* =====================================
    ESTADO
@@ -128,6 +131,34 @@ imageInput.addEventListener(
     }
 );
 
+/* =====================================
+   TIPO DE CONTEÚDO
+===================================== */
+
+function atualizarTipoConteudo() {
+
+    if (!contentType) {
+        return;
+    }
+
+    const tipo =
+        contentType.value;
+
+    console.log(
+        "Tipo selecionado:",
+        tipo
+    );
+}
+
+if (contentType) {
+
+    contentType.addEventListener(
+        "change",
+        atualizarTipoConteudo
+    );
+
+    atualizarTipoConteudo();
+}
 
 /* =====================================
    API
