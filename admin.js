@@ -1573,7 +1573,11 @@ function cancelarEdicao() {
         "";
 
 
-    form.reset();
+    const passwordGuardada = passwordInput.value;
+
+form.reset();
+
+passwordInput.value = passwordGuardada;
 
 
     dateInput.value =
