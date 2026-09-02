@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description"
+          content="50PORCENTO — marcas e lojas com oportunidades e promoções.">
+
+    <title>Marcas — 50PORCENTO</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .brands-page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 24px 80px;
+        }
+
+        .brands-header {
+            margin-bottom: 40px;
+        }
+
+        .brands-header .eyebrow {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .brands-header h1 {
+            margin: 8px 0 10px;
+        }
+
+        .brands-header p {
+            margin: 0;
+            color: #777;
+        }
+
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+        }
+
+        .brand-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 160px;
+            padding: 24px;
+            border: 1px solid #e6e6e6;
+            border-radius: 14px;
+            background: #fff;
+            text-decoration: none;
+            color: inherit;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .brand-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+        }
+
+        .brand-card img {
+            width: 90px;
+            height: 70px;
+            object-fit: contain;
+            margin-bottom: 14px;
+        }
+
+        .brand-card h2 {
+            margin: 0;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .brands-empty,
+        .brands-error {
+            color: #777;
+            padding: 30px 0;
+        }
+
+        @media (max-width: 600px) {
+            .brands-page {
+                padding: 40px 16px 60px;
+            }
+
+            .brands-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .brand-card {
+                min-height: 140px;
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+
+    <div class="header-inner">
+
+        <a href="index.html" class="logo">
+            50<span>PORCENTO</span>
+        </a>
+
+        <div class="header-right">
+
+            <a href="index.html#ofertas">
+                Ofertas
+            </a>
+
+            <a href="marcas.html">
+                Marcas
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <section class="brands-page">
+
+        <div class="brands-header">
+
+            <span class="eyebrow">
+                LOJAS E MARCAS
+            </span>
+
+            <h1>
+                Marcas
+            </h1>
+
+            <p>
+                Descobre as marcas e lojas que acompanhamos.
+            </p>
+
+        </div>
+
+
+        <div
+            id="brands"
+            class="brands-grid">
+        </div>
+
+        <p
+            id="brandsEmpty"
+            class="brands-empty"
+            hidden>
+            Ainda não existem marcas.
+        </p>
+
+        <p
+            id="brandsError"
+            class="brands-error"
+            hidden>
+            Não foi possível carregar as marcas.
+        </p>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-inner">
+
+        <div class="footer-brand">
+
+            <strong>
+                50<span>PORCENTO</span>
+            </strong>
+
+            <p>
+                Promoções que valem a pena.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="index.html#ofertas">
+                Ofertas
+            </a>
+
+            <a href="index.html#categorias">
+                Categorias
+            </a>
+
+            <a href="marcas.html">
+                Marcas
+            </a>
+
+            <a href="admin.html">
+                Administração
+            </a>
+
+        </div>
+
+
+        <div class="footer-copy">
+
+            <span>
+                © 2026 50PORCENTO
+            </span>
+
+            <small>
+                Links de afiliados podem gerar uma comissão.
+            </small>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+async function carregarMarcas() {
+
+    const brands = document.querySelector("#brands");
+    const empty = document.querySelector("#brandsEmpty");
+    const error = document.querySelector("#brandsError");
+
+    try {
+
+        const response = await fetch(
+            `/api/marcas?t=${Date.now()}`,
+            {
+                cache: "no-store"
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Erro " + response.status);
+        }
+
+        const data = await response.json();
+
+        const marcas = Array.isArray(data.marcas)
+            ? data.marcas
+            : [];
+
+        brands.innerHTML = "";
+
+        if (!marcas.length) {
+            empty.hidden = false;
+            return;
+        }
+
+        marcas.forEach(marca => {
+
+            const card = document.createElement("a");
+
+            card.className = "brand-card";
+
+            card.href = marca.link;
+
+            card.target = "_blank";
+
+            card.rel = "noopener noreferrer";
+
+            const img = document.createElement("img");
+
+            img.src = marca.logo || "";
+
+            img.alt = marca.nome || "Marca";
+
+            const title = document.createElement("h2");
+
+            title.textContent = marca.nome || "Marca";
+
+            card.appendChild(img);
+
+            card.appendChild(title);
+
+            brands.appendChild(card);
+
+        });
+
+    } catch (e) {
+
+        console.error(e);
+
+        error.hidden = false;
+
+    }
+
+}
+
+carregarMarcas();
+
+</script>
+
+</body>
+
+</html>
