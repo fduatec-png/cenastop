@@ -1727,7 +1727,81 @@ function escapeAttribute(
         );
 
 }
+/* =====================================
+   EDITAR MARCA
+===================================== */
 
+async function editarMarca(marca, novoNome, novoLink) {
+
+    try {
+
+        status("A atualizar marca...");
+
+        await api(
+            `/api/marcas?id=${encodeURIComponent(marca.id)}`,
+            {
+                method: "PUT",
+                body: JSON.stringify({
+                    nome: novoNome,
+                    logo: marca.logo,
+                    link: novoLink
+                })
+            }
+        );
+
+        await carregarMarcas();
+
+        status("Marca atualizada com sucesso.");
+
+    } catch (e) {
+
+        console.error(e);
+
+        status(
+            e.message,
+            true
+        );
+
+    }
+
+}
+
+
+/* =====================================
+   APAGAR MARCA
+===================================== */
+
+async function apagarMarca(id, nome) {
+
+    try {
+
+        status("A apagar marca...");
+
+        await api(
+            `/api/marcas?id=${encodeURIComponent(id)}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        await carregarMarcas();
+
+        status(
+            `Marca "${nome}" apagada com sucesso.`
+        );
+
+    } catch (e) {
+
+        console.error(e);
+
+        status(
+            e.message,
+            true
+        );
+
+    }
+
+}
 
 /* =====================================
    INICIAR
