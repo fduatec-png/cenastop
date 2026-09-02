@@ -147,10 +147,56 @@ function atualizarTipoConteudo() {
     const brandFields =
         document.querySelector("#brandFields");
 
+
+    /* Campos específicos de marca */
+
     if (brandFields) {
+
         brandFields.hidden =
             tipo !== "marca";
+
     }
+
+
+    /* Campos específicos de promoção */
+
+    const camposPromocao = [
+        "#title",
+        "#brand",
+        "#category",
+        "#date",
+        "#link",
+        "#image"
+    ];
+
+
+    camposPromocao.forEach(
+        selector => {
+
+            const campo =
+                document.querySelector(
+                    selector
+                );
+
+            if (!campo) {
+                return;
+            }
+
+            const grupo =
+                campo.closest(
+                    ".form-group"
+                );
+
+            if (grupo) {
+
+                grupo.hidden =
+                    tipo === "marca";
+
+            }
+
+        }
+    );
+
 }
 
 /* =====================================
