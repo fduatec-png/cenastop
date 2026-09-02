@@ -200,8 +200,9 @@ input {
 
     gap: 15px;
 
-    flex-shrink: 0;
+    margin-left: auto;
 
+    flex-shrink: 0;
 }
 
 
