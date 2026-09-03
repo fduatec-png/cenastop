@@ -1172,7 +1172,7 @@ const brand = brandOption ? brandOption.textContent.trim() : "";
     link: link,
     data: date,
     imagem: imagem
-}
+
                             })
                     }
                 );
