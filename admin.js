@@ -1026,11 +1026,9 @@ await carregarMarcas();
                 .querySelector("#title")
                 .value
                 .trim();
-const brand =
-    document
-        .querySelector("#brand")
-        .value
-        .trim();
+const brandId = document.querySelector("#brand").value;
+const brandOption = document.querySelector("#brand option:checked");
+const brand = brandOption ? brandOption.textContent.trim() : "";
 
         const category =
             document
@@ -1166,12 +1164,15 @@ const brand =
 
                         body:
                             JSON.stringify({
-                                titulo: title,
-                               marca: brand,
-                                categoria: category,
-                                link: link,
-                                data: date,
-                                imagem: imagem
+                              {
+    titulo: title,
+    marca: brand,
+    marca_id: brandId ? Number(brandId) : null,
+    categoria: category,
+    link: link,
+    data: date,
+    imagem: imagem
+}
                             })
                     }
                 );
