@@ -53,7 +53,7 @@ const statusBox =
 const contentType =
     document.querySelector("#contentType");
 
-
+const brandSelect = document.querySelector("#brand");
 /* =====================================
    ESTADO
 ===================================== */
@@ -418,7 +418,32 @@ async function carregarMarcas() {
     }
 }
 
+async function carregarMarcasNoSelect() {
+    if (!brandSelect) return;
 
+    try {
+        const response = await fetch("/api/marcas?t=" + Date.now(), {
+            cache: "no-store"
+        });
+
+        const data = await response.json();
+        const marcas = data.marcas || [];
+
+        brandSelect.innerHTML = `
+            <option value="">Selecionar marca</option>
+        `;
+
+        marcas.forEach(marca => {
+            const option = document.createElement("option");
+            option.value = marca.id;
+            option.textContent = marca.nome;
+            brandSelect.appendChild(option);
+        });
+
+    } catch (error) {
+        console.error("Erro ao carregar marcas:", error);
+    }
+}
 /* =====================================
    MOSTRAR MARCAS
 ===================================== */
@@ -1937,6 +1962,7 @@ if (adminPassword) {
     mostrarPainel();
     carregarPromocoes();
     carregarMarcas();
+    carregarMarcasNoSelect();
 } else {
     mostrarLogin();
 }
