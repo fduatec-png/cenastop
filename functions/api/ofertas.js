@@ -9,7 +9,7 @@ export async function onRequest(context) {
   if (request.method === "GET") {
 
     const { results } = await env.DB.prepare(
-      "SELECT id, titulo, marca, categoria, data, link, imagem, criado_em FROM promocoes ORDER BY data DESC, id DESC"
+      "SELECT id, titulo, marca, marca_id, categoria, data, link, imagem, criado_em FROM promocoes ORDER BY data DESC, id DESC"
     ).all();
 
     return new Response(
@@ -65,6 +65,10 @@ export async function onRequest(context) {
       String(body.categoria || "").trim();
 
     const marca = String(body.marca || "").trim();
+
+    const marcaId = body.marca_id
+  ? Number(body.marca_id)
+  : null;
 
     const data =
       String(body.data || "").trim();
@@ -125,12 +129,13 @@ export async function onRequest(context) {
     const result =
       await env.DB.prepare(
         `INSERT INTO promocoes
-        (titulo, marca, categoria, data, link, imagem)
+        (titulo, marca, marca_id, categoria, data, link, imagem)
         VALUES (?, ?, ?, ?, ?, ?)`
       )
       .bind(
         titulo,
         marca,
+        marcaId,
         categoria,
         data,
         link,
@@ -188,6 +193,10 @@ export async function onRequest(context) {
       String(body.categoria || "").trim();
 
     const marca = String(body.marca || "").trim();
+
+    const marcaId = body.marca_id
+  ? Number(body.marca_id)
+  : null;
 
     const data =
       String(body.data || "").trim();
@@ -295,6 +304,7 @@ export async function onRequest(context) {
       `UPDATE promocoes
        SET titulo = ?,
        marca = ?,
+       marca_id = ?,
            categoria = ?,
            data = ?,
            link = ?,
@@ -304,6 +314,7 @@ export async function onRequest(context) {
     .bind(
       titulo,
       marca, 
+      marcaId,
       categoria,
       data,
       link,
