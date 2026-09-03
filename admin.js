@@ -1164,7 +1164,7 @@ const brand = brandOption ? brandOption.textContent.trim() : "";
 
                         body:
                             JSON.stringify({
-                              {
+                              
     titulo: title,
     marca: brand,
     marca_id: brandId ? Number(brandId) : null,
