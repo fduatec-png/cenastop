@@ -466,15 +466,11 @@ function mostrarMarcas(marcas) {
                 alt="${escapeAttribute(marca.nome || "Marca")}"
             >
 
-            <div>
-                <h3>
-                    ${escapeHtml(marca.nome)}
-                </h3>
-
-                <p>
-                    ${escapeHtml(marca.link)}
-                </p>
-            </div>
+          <div>
+    <h3>
+        ${escapeHtml(marca.nome)}
+    </h3>
+</div>
 
             <div class="offer-actions">
 
