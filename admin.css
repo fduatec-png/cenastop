@@ -665,3 +665,53 @@ input[type="file"] {
     color: #777;
     word-break: break-word;
 }
+/* =========================================
+   MARCAS — CARTÕES VERTICAIS
+========================================= */
+
+#brandList .offer-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 28px 24px 24px;
+    min-height: 280px;
+    text-align: center;
+}
+
+#brandList .offer-item img {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+
+#brandList .offer-item > div:not(.offer-actions) {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#brandList .offer-item h3 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.25;
+}
+
+#brandList .offer-item .offer-actions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e6e6e6;
+}
+
+#brandList .offer-item .offer-actions button {
+    flex: 1;
+    max-width: 120px;
+}
