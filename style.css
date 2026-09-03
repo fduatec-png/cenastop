@@ -1714,11 +1714,12 @@ footer {
 
 .header-link {
     display: inline-block;
-    color: #111;
+    color: #ffffff;
     text-decoration: none;
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 10px;
+    font-weight: 800;
     letter-spacing: .04em;
+    transition: color .2s;
 }
 
 .header-link:hover {
