@@ -130,7 +130,7 @@ export async function onRequest(context) {
       await env.DB.prepare(
         `INSERT INTO promocoes
         (titulo, marca, marca_id, categoria, data, link, imagem)
-        VALUES (?, ?, ?, ?, ?, ?)`
+        VALUES (?, ?, ?,?, ?, ?, ?)`
       )
       .bind(
         titulo,
