@@ -64,11 +64,13 @@ export async function onRequest(context) {
     const categoria =
       String(body.categoria || "").trim();
 
-    const marca = String(body.marca || "").trim();
+    const marca =
+      String(body.marca || "").trim();
 
-    const marcaId = body.marca_id
-  ? Number(body.marca_id)
-  : null;
+    const marcaId =
+      body.marca_id
+        ? Number(body.marca_id)
+        : null;
 
     const data =
       String(body.data || "").trim();
@@ -126,11 +128,15 @@ export async function onRequest(context) {
     }
 
 
+    /* =====================================
+       GUARDAR NA D1
+    ===================================== */
+
     const result =
       await env.DB.prepare(
         `INSERT INTO promocoes
         (titulo, marca, marca_id, categoria, data, link, imagem)
-        VALUES (?, ?, ?,?, ?, ?, ?)`
+        VALUES (?, ?, ?, ?, ?, ?, ?)`
       )
       .bind(
         titulo,
@@ -144,10 +150,99 @@ export async function onRequest(context) {
       .run();
 
 
+    /* =====================================
+       PUBLICAR NO FACEBOOK
+    ===================================== */
+
+    let facebookPublicado = false;
+
+    try {
+
+      if (
+        env.FACEBOOK_PAGE_ACCESS_TOKEN
+      ) {
+
+        const mensagemFacebook = [
+          titulo,
+          marca ? `Marca: ${marca}` : "",
+          categoria ? `Categoria: ${categoria}` : "",
+          "",
+          link
+        ]
+          .filter(Boolean)
+          .join("\n");
+
+
+        const facebookResponse =
+          await fetch(
+            "https://graph.facebook.com/v26.0/669735022899305/feed",
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/x-www-form-urlencoded"
+              },
+
+              body:
+                new URLSearchParams({
+                  message: mensagemFacebook,
+                  access_token:
+                    env.FACEBOOK_PAGE_ACCESS_TOKEN
+                })
+            }
+          );
+
+
+        const facebookData =
+          await facebookResponse.json();
+
+
+        if (!facebookResponse.ok) {
+
+          console.error(
+            "Erro Facebook:",
+            facebookData
+          );
+
+        } else {
+
+          facebookPublicado = true;
+
+          console.log(
+            "Facebook publicado:",
+            facebookData
+          );
+
+        }
+
+      } else {
+
+        console.error(
+          "Secret FACEBOOK_PAGE_ACCESS_TOKEN não encontrado."
+        );
+
+      }
+
+    } catch (facebookError) {
+
+      console.error(
+        "Erro ao publicar no Facebook:",
+        facebookError
+      );
+
+    }
+
+
+    /* =====================================
+       RESPOSTA
+    ===================================== */
+
     return Response.json(
       {
         ok: true,
-        id: result.meta.last_row_id
+        id: result.meta.last_row_id,
+        facebook_publicado: facebookPublicado
       },
       {
         status: 201
@@ -192,11 +287,13 @@ export async function onRequest(context) {
     const categoria =
       String(body.categoria || "").trim();
 
-    const marca = String(body.marca || "").trim();
+    const marca =
+      String(body.marca || "").trim();
 
-    const marcaId = body.marca_id
-  ? Number(body.marca_id)
-  : null;
+    const marcaId =
+      body.marca_id
+        ? Number(body.marca_id)
+        : null;
 
     const data =
       String(body.data || "").trim();
@@ -257,7 +354,6 @@ export async function onRequest(context) {
 
     /* =====================================
        MANTER IMAGEM ANTIGA
-       SE NÃO FOI ENVIADA NOVA
     ===================================== */
 
     const imagemFinal =
@@ -303,8 +399,8 @@ export async function onRequest(context) {
     await env.DB.prepare(
       `UPDATE promocoes
        SET titulo = ?,
-       marca = ?,
-       marca_id = ?,
+           marca = ?,
+           marca_id = ?,
            categoria = ?,
            data = ?,
            link = ?,
@@ -313,7 +409,7 @@ export async function onRequest(context) {
     )
     .bind(
       titulo,
-      marca, 
+      marca,
       marcaId,
       categoria,
       data,
@@ -336,37 +432,44 @@ export async function onRequest(context) {
      DELETE — APAGAR
   ===================================== */
 
- if (request.method === "DELETE") {
+  if (request.method === "DELETE") {
 
-  const id = url.searchParams.get("id");
+    const id =
+      url.searchParams.get("id");
 
-  if (id) {
 
-    const result = await env.DB.prepare(
-      "DELETE FROM promocoes WHERE id = ?"
-    )
-    .bind(id)
-    .run();
+    if (id) {
 
-    return Response.json({
-      ok: true,
-      deleted: result.meta.changes || 0
-    });
+      const result =
+        await env.DB.prepare(
+          "DELETE FROM promocoes WHERE id = ?"
+        )
+        .bind(id)
+        .run();
 
-  } else {
+      return Response.json({
+        ok: true,
+        deleted:
+          result.meta.changes || 0
+      });
 
-    const result = await env.DB.prepare(
-      "DELETE FROM promocoes"
-    )
-    .run();
+    } else {
 
-    return Response.json({
-      ok: true,
-      deleted: result.meta.changes || 0
-    });
+      const result =
+        await env.DB.prepare(
+          "DELETE FROM promocoes"
+        )
+        .run();
+
+      return Response.json({
+        ok: true,
+        deleted:
+          result.meta.changes || 0
+      });
+
+    }
 
   }
-}
 
 
   /* =====================================
