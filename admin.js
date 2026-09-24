@@ -419,29 +419,62 @@ async function carregarMarcas() {
 }
 
 async function carregarMarcasNoSelect() {
-    if (!brandSelect) return;
+
+    if (!brandSelect) {
+        return;
+    }
 
     try {
-        const response = await fetch("/api/marcas?t=" + Date.now(), {
-            cache: "no-store"
-        });
+
+        const response = await fetch(
+            "/api/marcas?t=" + Date.now(),
+            {
+                cache: "no-store"
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                `Erro ${response.status}`
+            );
+        }
 
         const data = await response.json();
-        const marcas = data.marcas || [];
+
+        const marcas = Array.isArray(data.marcas)
+            ? data.marcas
+            : [];
 
         brandSelect.innerHTML = `
             <option value="">Selecionar marca</option>
         `;
 
         marcas.forEach(marca => {
-            const option = document.createElement("option");
-            option.value = marca.id;
-            option.textContent = marca.nome;
+
+            const option =
+                document.createElement("option");
+
+            option.value = String(marca.id);
+
+            option.textContent =
+                marca.nome;
+
             brandSelect.appendChild(option);
+
         });
 
     } catch (error) {
-        console.error("Erro ao carregar marcas:", error);
+
+        console.error(
+            "Erro ao carregar marcas no seletor:",
+            error
+        );
+
+        brandSelect.innerHTML = `
+            <option value="">
+                Erro ao carregar marcas
+            </option>
+        `;
     }
 }
 /* =====================================
