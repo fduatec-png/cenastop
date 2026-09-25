@@ -157,180 +157,128 @@ let facebookPublicado = false;
 
 try {
 
-  if (env.FACEBOOK_PAGE_ACCESS_TOKEN) {
+    if (env.FACEBOOK_PAGE_ACCESS_TOKEN) {
 
-    const accessToken =
-      env.FACEBOOK_PAGE_ACCESS_TOKEN;
+        const mensagemFacebook =
+            `${titulo}\n\n${link}`;
 
-    const mensagemFacebook =
-      `${titulo}\n\n${link}`;
+        const partes =
+            imagem.split(",");
 
-    /*
-     * A imagem está guardada como:
-     * data:image/webp;base64,...
-     *
-     * Vamos convertê-la para ficheiro
-     * e enviá-la primeiro para o Facebook.
-     */
-
-    const partesImagem =
-      imagem.split(",");
-
-    if (
-      partesImagem.length < 2 ||
-      !partesImagem[0].startsWith("data:")
-    ) {
-
-      throw new Error(
-        "Formato da imagem inválido."
-      );
-
-    }
-
-    const cabecalhoImagem =
-      partesImagem[0];
-
-    const base64Imagem =
-      partesImagem[1];
-
-    const mimeMatch =
-      cabecalhoImagem.match(
-        /data:(.*?);base64/
-      );
-
-    const mimeType =
-      mimeMatch
-        ? mimeMatch[1]
-        : "image/webp";
-
-    const bytes =
-      Uint8Array.from(
-        atob(base64Imagem),
-        c => c.charCodeAt(0)
-      );
-
-    const formData =
-      new FormData();
-
-    formData.append(
-      "source",
-      new Blob(
-        [bytes],
-        {
-          type: mimeType
+        if (partes.length < 2) {
+            throw new Error(
+                "Imagem inválida para publicação no Facebook."
+            );
         }
-      ),
-      "promocao.webp"
-    );
 
-    formData.append(
-      "published",
-      "false"
-    );
+        const cabecalho =
+            partes[0];
 
-    formData.append(
-      "access_token",
-      accessToken
-    );
+        const base64 =
+            partes[1];
 
-    /*
-     * 1. Enviar a imagem para o Facebook
-     */
+        const mimeMatch =
+            cabecalho.match(
+                /data:(.*?);base64/
+            );
 
-    const fotoResponse =
-      await fetch(
-        "https://graph.facebook.com/v26.0/669735022899305/photos",
-        {
-          method: "POST",
-          body: formData
+        const mimeType =
+            mimeMatch
+                ? mimeMatch[1]
+                : "image/webp";
+
+        const binaryString =
+            atob(base64);
+
+        const bytes =
+            new Uint8Array(
+                binaryString.length
+            );
+
+        for (
+            let i = 0;
+            i < binaryString.length;
+            i++
+        ) {
+            bytes[i] =
+                binaryString.charCodeAt(i);
         }
-      );
 
-    const fotoData =
-      await fotoResponse.json();
+        const formData =
+            new FormData();
 
-    if (!fotoResponse.ok) {
-
-      console.error(
-        "Erro ao enviar imagem para Facebook:",
-        fotoData
-      );
-
-    } else {
-
-      /*
-       * 2. Criar a publicação com:
-       *    - título
-       *    - link
-       *    - imagem
-       */
-
-      const publicacaoResponse =
-        await fetch(
-          "https://graph.facebook.com/v26.0/669735022899305/feed",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type":
-                "application/x-www-form-urlencoded"
-            },
-            body:
-              new URLSearchParams({
-                message:
-                  mensagemFacebook,
-
-                "attached_media[0]":
-                  JSON.stringify({
-                    media_fbid:
-                      fotoData.id
-                  }),
-
-                access_token:
-                  accessToken
-              })
-          }
+        formData.append(
+            "source",
+            new Blob(
+                [bytes],
+                {
+                    type: mimeType
+                }
+            ),
+            "promocao.webp"
         );
 
-      const publicacaoData =
-        await publicacaoResponse.json();
-
-      if (!publicacaoResponse.ok) {
-
-        console.error(
-          "Erro ao publicar no Facebook:",
-          publicacaoData
+        formData.append(
+            "caption",
+            mensagemFacebook
         );
 
-      } else {
+        formData.append(
+            "published",
+            "true"
+        );
+
+        formData.append(
+            "access_token",
+            env.FACEBOOK_PAGE_ACCESS_TOKEN
+        );
+
+        const facebookResponse =
+            await fetch(
+                "https://graph.facebook.com/v26.0/669735022899305/photos",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+        const facebookData =
+            await facebookResponse.json();
+
+        console.log(
+            "Facebook resposta:",
+            facebookData
+        );
+
+        if (!facebookResponse.ok) {
+
+            throw new Error(
+                facebookData?.error?.message ||
+                "Erro ao publicar no Facebook."
+            );
+
+        }
+
+        if (!facebookData.id) {
+
+            throw new Error(
+                "Facebook não devolveu o ID da publicação."
+            );
+
+        }
 
         facebookPublicado = true;
 
-        console.log(
-          "Facebook publicado:",
-          publicacaoData
-        );
-
-      }
-
     }
-
-  } else {
-
-    console.error(
-      "Secret FACEBOOK_PAGE_ACCESS_TOKEN não encontrado."
-    );
-
-  }
 
 } catch (facebookError) {
 
-  console.error(
-    "Erro ao publicar no Facebook:",
-    facebookError
-  );
+    console.error(
+        "Erro ao publicar no Facebook:",
+        facebookError
+    );
 
 }
-
     /* =====================================
        RESPOSTA
     ===================================== */
