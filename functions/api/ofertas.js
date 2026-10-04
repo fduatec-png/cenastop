@@ -150,195 +150,79 @@ export async function onRequest(context) {
       .run();
 
 
-    /* =====================================
-       PUBLICAR NO FACEBOOK
-    ===================================== */
+/* =====================================
+   PUBLICAR NO FACEBOOK
+===================================== */
+
 let facebookPublicado = false;
 
 try {
-
     if (env.FACEBOOK_PAGE_ACCESS_TOKEN) {
+        const mensagemFacebook = `${titulo}\n\n${link}`;
 
-        const mensagemFacebook =
-            `${titulo}\n\n${link}`;
-
-        const partes =
-            imagem.split(",");
+        const partes = imagem.split(",");
 
         if (partes.length < 2) {
-            throw new Error(
-                "Imagem inválida para publicação no Facebook."
-            );
+            throw new Error("Imagem inválida para publicação no Facebook.");
         }
 
-        const cabecalho =
-            partes[0];
+        const cabecalho = partes[0];
+        const base64 = partes[1];
 
-        const base64 =
-            partes[1];
+        const mimeMatch = cabecalho.match(/data:(.*?);base64/);
+        const mimeType = mimeMatch ? mimeMatch[1] : "image/webp";
 
-        const mimeMatch =
-            cabecalho.match(
-                /data:(.*?);base64/
-            );
+        const binaryString = atob(base64);
+        const bytes = new Uint8Array(binaryString.length);
 
-        const mimeType =
-            mimeMatch
-                ? mimeMatch[1]
-                : "image/webp";
-
-        const binaryString =
-            atob(base64);
-
-        const bytes =
-            new Uint8Array(
-                binaryString.length
-            );
-
-        for (
-            let i = 0;
-            i < binaryString.length;
-            i++
-        ) {
-            bytes[i] =
-                binaryString.charCodeAt(i);
+        for (let i = 0; i < binaryString.length; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
         }
 
-        /* =================================
-           1. ENVIAR IMAGEM PARA O FACEBOOK
-        ================================= */
-
-        const formData =
-            new FormData();
+        const formData = new FormData();
 
         formData.append(
             "source",
-            new Blob(
-                [bytes],
-                {
-                    type: mimeType
-                }
-            ),
+            new Blob([bytes], { type: mimeType }),
             "promocao.webp"
         );
 
-        formData.append(
-            "published",
-            "false"
-        );
-
+        formData.append("caption", mensagemFacebook);
+        formData.append("published", "true");
         formData.append(
             "access_token",
             env.FACEBOOK_PAGE_ACCESS_TOKEN
         );
 
-        const fotoResponse =
-            await fetch(
-                "https://graph.facebook.com/v26.0/669735022899305/photos",
-                {
-                    method: "POST",
-                    body: formData
-                }
-            );
-
-        const fotoData =
-            await fotoResponse.json();
-
-        console.log(
-            "Facebook imagem:",
-            fotoData
+        const facebookResponse = await fetch(
+            "https://graph.facebook.com/v26.0/669735022899305/photos",
+            {
+                method: "POST",
+                body: formData
+            }
         );
 
-        if (!fotoResponse.ok) {
+        const facebookData = await facebookResponse.json();
 
+        console.log("Facebook resposta:", facebookData);
+
+        if (!facebookResponse.ok) {
             throw new Error(
-                fotoData?.error?.message ||
-                "Erro ao enviar imagem para o Facebook."
+                facebookData?.error?.message ||
+                "Erro ao publicar no Facebook."
             );
-
         }
 
-        if (!fotoData.id) {
-
-            throw new Error(
-                "Facebook não devolveu o ID da imagem."
-            );
-
-        }
-
-        /* =================================
-           2. CRIAR PUBLICAÇÃO
-        ================================= */
-
-        const postForm =
-            new URLSearchParams();
-
-        postForm.append(
-            "message",
-            mensagemFacebook
-        );
-
-        postForm.append(
-            "attached_media[0]",
-            JSON.stringify({
-                media_fbid: fotoData.id
-            })
-        );
-
-        postForm.append(
-            "access_token",
-            env.FACEBOOK_PAGE_ACCESS_TOKEN
-        );
-
-        const postResponse =
-            await fetch(
-                "https://graph.facebook.com/v26.0/669735022899305/feed",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type":
-                            "application/x-www-form-urlencoded"
-                    },
-                    body: postForm.toString()
-                }
-            );
-
-        const postData =
-            await postResponse.json();
-
-        console.log(
-            "Facebook publicação:",
-            postData
-        );
-
-        if (!postResponse.ok) {
-
-            throw new Error(
-                postData?.error?.message ||
-                "Erro ao criar publicação no Facebook."
-            );
-
-        }
-
-        if (!postData.id) {
-
+        if (!facebookData.id) {
             throw new Error(
                 "Facebook não devolveu o ID da publicação."
             );
-
         }
 
         facebookPublicado = true;
-
     }
-
 } catch (facebookError) {
-
-    console.error(
-        "Erro ao publicar no Facebook:",
-        facebookError
-    );
-
+    console.error("Erro ao publicar no Facebook:", facebookError);
 }
     /* =====================================
        RESPOSTA
