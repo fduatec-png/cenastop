@@ -213,13 +213,16 @@ try {
             );
         }
 
-        if (!facebookData.id) {
-            throw new Error(
-                "Facebook não devolveu o ID da publicação."
-            );
-        }
+       if (!facebookData.id) {
+    throw new Error(
+        "Facebook não devolveu o ID da publicação."
+    );
+}
 
-        facebookPublicado = true;
+console.log("ID da foto:", facebookData.id);
+console.log("ID do post:", facebookData.post_id ?? null);
+
+facebookPublicado = true;
     }
 } catch (facebookError) {
     console.error("Erro ao publicar no Facebook:", facebookError);
