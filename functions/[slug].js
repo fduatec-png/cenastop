@@ -5,13 +5,17 @@ export async function onRequest(context) {
     .trim()
     .toLowerCase();
 
+  // Deixar as páginas normais do site funcionarem
+  if (slug === "marcas") {
+    return context.next();
+  }
+
   if (!slug) {
     return new Response("Marca não indicada.", {
       status: 400
     });
   }
 
-  // Procura a promoção mais recente dessa marca
   const promocao = await env.DB.prepare(
     `SELECT marca, link
      FROM promocoes
