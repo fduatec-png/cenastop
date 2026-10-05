@@ -213,16 +213,39 @@ try {
             );
         }
 
-       if (!facebookData.id) {
+      if (!facebookData.id) {
     throw new Error(
-        "Facebook não devolveu o ID da publicação."
+        "Facebook não devolveu o ID da foto."
     );
 }
 
 console.log("ID da foto:", facebookData.id);
 console.log("ID do post:", facebookData.post_id ?? null);
 
-facebookPublicado = true;
+if (facebookData.post_id) {
+
+    const verificarResponse = await fetch(
+        `https://graph.facebook.com/v26.0/${facebookData.post_id}?fields=id,is_published,privacy,permalink_url,message&access_token=${encodeURIComponent(env.FACEBOOK_PAGE_ACCESS_TOKEN)}`
+    );
+
+    const verificarData =
+        await verificarResponse.json();
+
+    console.log(
+        "Facebook verificação do post:",
+        verificarData
+    );
+
+    if (!verificarResponse.ok) {
+        throw new Error(
+            verificarData?.error?.message ||
+            "Não foi possível verificar o post."
+        );
+    }
+
+    facebookPublicado =
+        verificarData.is_published === true;
+}
     }
 } catch (facebookError) {
     console.error("Erro ao publicar no Facebook:", facebookError);
