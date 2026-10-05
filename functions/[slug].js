@@ -26,17 +26,9 @@ export async function onRequest(context) {
     .bind(slug)
     .first();
 
-  if (!promocao || !promocao.link) {
-    return new Response(
-      "Promoção não encontrada.",
-      {
-        status: 404,
-        headers: {
-          "Content-Type": "text/plain; charset=UTF-8"
-        }
-      }
-    );
-  }
+ if (!promocao || !promocao.link) {
+  return context.next();
+}
 
   return Response.redirect(promocao.link, 302);
 }
