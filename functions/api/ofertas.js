@@ -158,7 +158,19 @@ let facebookPublicado = false;
 
 try {
     if (env.FACEBOOK_PAGE_ACCESS_TOKEN) {
-        const mensagemFacebook = `${titulo}\n\n${link}`;
+        const slug = String(marca || "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+const linkCurto =
+    `https://50porcento.pt/${slug}`;
+
+const mensagemFacebook =
+    `${titulo}\n\n${linkCurto}`;
 
         const partes = imagem.split(",");
 
